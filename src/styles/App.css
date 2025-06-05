@@ -1,0 +1,311 @@
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Container utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Button hover effects */
+.ant-btn:hover {
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+.ant-btn-primary:hover {
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+}
+
+/* Card hover effects */
+.ant-card:hover {
+  transform: translateY(-8px);
+  transition: all 0.3s ease;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  /* Header adjustments */
+  .desktop-menu {
+    display: none !important;
+  }
+  
+  .mobile-menu-btn {
+    display: block !important;
+  }
+
+  /* Hero section */
+  .hero-title {
+    font-size: 2.5rem !important;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem !important;
+  }
+
+  /* Sections padding */
+  .section-padding {
+    padding: 60px 15px !important;
+  }
+
+  /* Grid adjustments */
+  .ant-col {
+    margin-bottom: 24px;
+  }
+
+  /* Typography */
+  h1 {
+    font-size: 2rem !important;
+  }
+  
+  h2 {
+    font-size: 1.8rem !important;
+  }
+  
+  h3 {
+    font-size: 1.5rem !important;
+  }
+
+  /* Buttons */
+  .ant-btn-lg {
+    height: 45px !important;
+    padding: 0 24px !important;
+    font-size: 14px !important;
+  }
+
+  /* Cards */
+  .ant-card-body {
+    padding: 16px !important;
+  }
+
+  /* Space adjustments */
+  .ant-space {
+    gap: 8px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Extra small screens */
+  .hero-title {
+    font-size: 2rem !important;
+  }
+  
+  .section-title {
+    font-size: 1.5rem !important;
+  }
+  
+  .ant-btn-lg {
+    height: 40px !important;
+    font-size: 13px !important;
+  }
+  
+  .container {
+    padding: 0 15px;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding: 0 40px;
+  }
+  
+  .hero-title {
+    font-size: 3rem !important;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1200px) {
+  .hero-title {
+    font-size: 3.5rem !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ff5722, #ff6b35);
+}
+
+/* Loading animations */
+.loading-spinner {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Gradient text utilities */
+.gradient-text {
+  background: linear-gradient(45deg, #ff6b35, #ff8c42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass morphism effect */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Shadow utilities */
+.shadow-light {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-medium {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.shadow-heavy {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Animation delays for staggered effects */
+.animate-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-3 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-4 {
+  animation-delay: 0.4s;
+}
+
+/* Focus states for accessibility */
+.ant-btn:focus,
+.ant-input:focus,
+.ant-card:focus {
+  outline: 2px solid #ff6b35;
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .ant-btn-primary {
+    background: #000 !important;
+    border-color: #000 !important;
+  }
+  
+  .gradient-text {
+    background: #000 !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+    color: #000 !important;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .float-animation {
+    animation: none !important;
+  }
+}

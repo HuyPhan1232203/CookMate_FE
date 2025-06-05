@@ -1,8 +1,9 @@
 import React from "react";
 import { Layout } from "antd";
 import { Outlet } from "react-router";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
 
 const { Content } = Layout;
 

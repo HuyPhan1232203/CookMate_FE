@@ -1,0 +1,65 @@
+export const recipes = [
+  {
+    id: 1,
+    title: "Spaghetti Carbonara",
+    image:
+      "https://media.istockphoto.com/id/1344241923/vi/anh/spaghetti-v%E1%BB%9Bi-th%E1%BB%8Bt-vi%C3%AAn-v%C3%A0-s%E1%BB%91t-c%C3%A0-chua-m%C3%AC-%E1%BB%91ng-%C3%BD.jpg?s=612x612&w=0&k=20&c=gEgei4SCpsPDlbVvmL8o1UnVoOrUw0jXH8TDhpeH4gM=",
+    description: "Món Ý truyền thống với sốt kem trứng và thịt xông khói.",
+    rating: 4.8,
+    prepTime: "15 phút",
+    cookTime: "20 phút",
+    difficulty: "Trung bình",
+    author: "Chef Mario",
+    ingredients: [
+      "200g mì spaghetti",
+      "100g thịt xông khói",
+      "2 quả trứng gà",
+      "50g phô mai Parmesan",
+      "Muối, tiêu, dầu olive",
+    ],
+    steps: [
+      "Luộc mì spaghetti theo hướng dẫn trên bao bì.",
+      "Chiên thịt xông khói cho đến khi vàng giòn.",
+      "Đánh tan trứng với phô mai, muối và tiêu.",
+      "Trộn mì đã luộc với thịt xông khói, sau đó cho hỗn hợp trứng vào đảo nhanh tay.",
+      "Thưởng thức ngay khi còn nóng.",
+    ],
+  },
+  {
+    id: 2,
+    title: "Bánh Mì Việt Nam",
+    image:
+      "https://banhmi.mein.vn/wp-content/uploads/2023/12/Banh-mi-Me-In-1.jpg",
+    description: "Bánh mì giòn rụm, nhân thịt và rau thơm.",
+    rating: 4.9,
+    prepTime: "10 phút",
+    cookTime: "15 phút",
+    difficulty: "Dễ",
+    author: "Chef Linh",
+    ingredients: [
+      "2 ổ bánh mì",
+      "100g thịt nguội hoặc chả lụa",
+      "Dưa leo, rau thơm, đồ chua",
+      "Nước sốt, pate, bơ",
+      "Ớt, tiêu, nước tương",
+    ],
+    steps: [
+      "Cắt bánh mì, phết pate và bơ vào bên trong.",
+      "Xếp thịt nguội, dưa leo, rau thơm, đồ chua vào bánh.",
+      "Rưới nước sốt, thêm ớt và tiêu tuỳ khẩu vị.",
+      "Kẹp lại và thưởng thức.",
+    ],
+  },
+  {
+    id: 3,
+    title: "Phở Bò Hà Nội",
+    image:
+      "https://cdn.tgdd.vn/Files/2022/01/25/1412805/cach-nau-pho-bo-nam-dinh-chuan-vi-thom-ngon-nhu-hang-quan-202201250230038502.jpg",
+    description: "Món phở truyền thống với nước dùng ngọt thơm và thịt bò mềm.",
+    rating: 4.9,
+    prepTime: "30 phút",
+    cookTime: "3 giờ",
+    difficulty: "Khó",
+    author: "Chef Hùng",
+  },
+];

@@ -31,7 +31,7 @@ const RecipeCard = ({ recipe, description }) => {
         padding: 0,
         overflow: "hidden",
       }}
-      bodyStyle={{ padding: 16, minHeight: 120 }}
+      styles={{ body: { padding: 16, minHeight: 120 } }}
     >
       <div style={{ fontWeight: 600, fontSize: 18, marginBottom: 4 }}>
         {recipe.title}

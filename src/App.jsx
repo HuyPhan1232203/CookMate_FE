@@ -8,6 +8,9 @@ import { store } from "@redux/store";
 const HomePage = lazy(() => import("@/pages/HomePage"));
 const RecipePage = lazy(() => import("@pages/RecipePage"));
 const RecipeDetail = lazy(() => import("@components/Recipe/RecipeDetail"));
+const LoginPage = lazy(() => import("@pages/LoginPage"));
+const RegisterPage = lazy(() => import("@pages/RegisterPage"));
+const ForgotPasswordPage = lazy(() => import("@pages/ForgotPasswordPage"));
 const NotFoundPage = lazy(() => import("@pages/NotFoundPage"));
 
 export default function App() {
@@ -21,6 +24,9 @@ export default function App() {
               <Route path="recipes" element={<RecipePage />} />
               <Route path="recipes/:id" element={<RecipeDetail />} />
             </Route>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>

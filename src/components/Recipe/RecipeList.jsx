@@ -4,15 +4,40 @@ import { useEffect, useRef, useState } from "react";
 import FloatingEmojis from "./FloatingEmojis";
 import RecipeListHeader from "./RecipeListHeader";
 import RecipeRow from "./RecipeRow";
+import { Skeleton } from "antd";
+
+// Hàm loại bỏ dấu tiếng Việt
+function removeVietnameseTones(str) {
+  return str
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D");
+}
 
 const RecipeList = () => {
   // Responsive: số card mỗi hàng theo breakpoint lớn nhất (lg=6 => 4 card/hàng)
   const cardsPerRow = 4;
   const rowRefs = useRef([]);
   const [visibleCount, setVisibleCount] = useState(4);
+  const [loading, setLoading] = useState(true);
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Lọc recipes theo searchValue (không phân biệt hoa thường và dấu)
+  const filteredRecipes = recipes.filter((r) =>
+    removeVietnameseTones(r.title.toLowerCase()).includes(
+      removeVietnameseTones(searchValue.toLowerCase())
+    )
+  );
 
   // Chia recipes thành từng hàng, chỉ lấy visibleCount món đầu
-  const visibleRecipes = recipes.slice(0, visibleCount);
+  const visibleRecipes = filteredRecipes.slice(0, visibleCount);
   const rows = [];
   for (let i = 0; i < visibleRecipes.length; i += cardsPerRow) {
     rows.push(visibleRecipes.slice(i, i + cardsPerRow));
@@ -27,7 +52,7 @@ const RecipeList = () => {
         }, idx * 250);
       }
     });
-  }, [rows.length]);
+  }, [rows.length, loading]);
 
   return (
     <div
@@ -66,6 +91,8 @@ const RecipeList = () => {
       <RecipeListHeader
         title="Công Thức Nấu Ăn"
         onBack={() => window.history.back()}
+        searchValue={searchValue}
+        onSearch={setSearchValue}
       />
       {/* Container cho danh sách công thức */}
       <div
@@ -81,15 +108,49 @@ const RecipeList = () => {
           zIndex: 3,
         }}
       >
-        {rows.map((row, rowIdx) => (
-          <RecipeRow
-            key={rowIdx}
-            row={row}
-            rowIdx={rowIdx}
-            rowRef={(el) => (rowRefs.current[rowIdx] = el)}
-            isLastRow={rowIdx === rows.length - 1}
-          />
-        ))}
+        {loading ? (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: 24,
+              marginBottom: 24,
+            }}
+          >
+            {[...Array(4)].map((_, i) => (
+              <div
+                key={i}
+                style={{
+                  borderRadius: 16,
+                  overflow: "hidden",
+                  background: "#fff",
+                  boxShadow: "0 2px 8px #0001",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Skeleton.Image style={{ width: "100%", height: 140 }} active />
+                <div style={{ padding: 16 }}>
+                  <Skeleton
+                    active
+                    title={false}
+                    paragraph={{ rows: 2, width: ["80%", "60%"] }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          rows.map((row, rowIdx) => (
+            <RecipeRow
+              key={rowIdx}
+              row={row}
+              rowIdx={rowIdx}
+              rowRef={(el) => (rowRefs.current[rowIdx] = el)}
+              isLastRow={rowIdx === rows.length - 1}
+            />
+          ))
+        )}
       </div>
       <style>{`
         .recipe-row-animate {
@@ -116,11 +177,11 @@ const RecipeList = () => {
           zIndex: -1,
         }}
       />
-      {visibleCount < recipes.length && (
+      {visibleCount < filteredRecipes.length && !loading && (
         <div style={{ textAlign: "center", marginTop: 32 }}>
           <AppButton
             onClick={() =>
-              setVisibleCount((c) => Math.min(c + 4, recipes.length))
+              setVisibleCount((c) => Math.min(c + 4, filteredRecipes.length))
             }
             bg="#ff6b35"
             color="#fff"

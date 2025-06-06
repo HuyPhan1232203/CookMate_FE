@@ -5,7 +5,7 @@ import React from "react";
 
 const { Title } = Typography;
 
-const RecipeListHeader = ({ title, onBack }) => {
+const RecipeListHeader = ({ title, onBack, searchValue, onSearch }) => {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 580;
   return (
     <div
@@ -32,6 +32,66 @@ const RecipeListHeader = ({ title, onBack }) => {
           {title}
         </Title>
       </ShimmerTitle>
+      {/* Search input */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "16px auto 0 auto",
+          maxWidth: isMobile ? "95%" : 400,
+          width: "100%",
+          position: "relative",
+        }}
+      >
+        <span
+          style={{
+            position: "absolute",
+            left: 16,
+            top: "50%",
+            transform: "translateY(-50%)",
+            color: "#ff9a44",
+            fontSize: 20,
+            pointerEvents: "none",
+          }}
+        >
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7" stroke="#ff9a44" strokeWidth="2" />
+            <path
+              d="M20 20L16.65 16.65"
+              stroke="#ff9a44"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+        </span>
+        <input
+          type="text"
+          placeholder="Tìm món ăn..."
+          value={searchValue}
+          onChange={(e) => onSearch && onSearch(e.target.value)}
+          style={{
+            padding: "10px 16px 10px 44px",
+            borderRadius: 24,
+            border: "1.5px solid #ff9a44",
+            fontSize: 16,
+            width: "100%",
+            outline: "none",
+            boxShadow: "0 2px 12px #ffb36622",
+            background: "#fffdfa",
+            color: "#ff6b35",
+            transition: "border 0.2s, box-shadow 0.2s",
+            fontWeight: 500,
+            letterSpacing: 0.2,
+            "::placeholder": {
+              color: "#ffb366",
+              opacity: 1,
+            },
+          }}
+          onFocus={(e) => (e.target.style.border = "2px solid #ff6b35")}
+          onBlur={(e) => (e.target.style.border = "1.5px solid #ff9a44")}
+        />
+      </div>
       <div
         style={{
           margin: "8px auto",

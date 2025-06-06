@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "antd";
 import { useNavigate } from "react-router-dom";
-import AppButton from "../../ultils/AppButton";
+import AppButton from "@ultils/AppButton";
 
 const RecipeCard = ({ recipe, description }) => {
   const navigate = useNavigate();

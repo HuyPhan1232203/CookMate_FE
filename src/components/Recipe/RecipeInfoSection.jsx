@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography, Tag, Rate } from "antd";
 import { useNavigate } from "react-router-dom";
+import AppButton from "@/ultils/AppButton";
 
 const RecipeInfoSection = ({ recipe }) => {
   const navigate = useNavigate();
@@ -79,17 +80,16 @@ const RecipeInfoSection = ({ recipe }) => {
         </ol>
       </div>
       <div style={{ textAlign: "left", marginTop: 24 }}>
-        <a
+        <AppButton
           onClick={() => navigate(-1)}
-          style={{
-            color: "#ff6b35",
-            fontWeight: 500,
-            fontSize: 16,
-            cursor: "pointer",
-          }}
+          bg="#ff6b35"
+          color="#fff"
+          radius="10px"
+          padding="8px 16px"
+          style={{ fontWeight: 500, fontSize: 16 }}
         >
           ← Quay lại danh sách
-        </a>
+        </AppButton>
       </div>
     </div>
   );

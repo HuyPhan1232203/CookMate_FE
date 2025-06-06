@@ -1,7 +1,7 @@
 import { RecipeDetail, RecipeList } from "../components/Recipe";
 import { useParams } from "react-router-dom";
 
-export const RecipePage = () => {
+const RecipePage = () => {
   const { id } = useParams();
   if (id) return <RecipeDetail id={id} />;
   return (
@@ -10,3 +10,5 @@ export const RecipePage = () => {
     </div>
   );
 };
+
+export default RecipePage;

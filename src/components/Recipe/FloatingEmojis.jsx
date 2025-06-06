@@ -1,5 +1,5 @@
+import { FloatingEmoji } from "@/styles/RecipeStyle/RecipeList.styled";
 import React from "react";
-import { FloatingEmoji } from "../../styles/RecipeStyle/RecipeList.styled";
 
 const FloatingEmojis = () => (
   <>

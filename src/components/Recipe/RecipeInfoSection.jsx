@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Tag, Rate } from "antd";
 import { useNavigate } from "react-router-dom";
-import AppButton from "../../ultils/AppButton";
+import AppButton from "@/ultils/AppButton";
 
 const RecipeInfoSection = ({ recipe }) => {
   const navigate = useNavigate();

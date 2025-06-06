@@ -1,4 +1,4 @@
-import { ShimmerTitle } from "../../styles/RecipeStyle/RecipeList.styled";
+import { ShimmerTitle } from "@/styles/RecipeStyle/RecipeList.styled";
 import BackButton from "./BackButton";
 import { Typography } from "antd";
 

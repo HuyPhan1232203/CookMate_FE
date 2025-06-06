@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { Row, Col, Typography } from "antd";
 import RecipeCard from "./RecipeCard";
 import styled, { keyframes, css } from "styled-components";
+import AppButton from "../../ultils/AppButton";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 
@@ -79,6 +81,40 @@ const ShimmerTitle = styled.div`
     pointer-events: none;
   }
 `;
+
+const SimpleCardWrapper = styled.div`
+  border-radius: 36px;
+  background: #fff;
+  box-shadow: 0 4px 32px rgba(255, 107, 53, 0.1);
+  transition: box-shadow 0.3s, transform 0.3s, outline 0.2s;
+  position: relative;
+  overflow: hidden;
+  &:hover {
+    box-shadow: 0 8px 40px 0 rgba(255, 107, 53, 0.18);
+    transform: scale(1.035);
+    outline: 2.5px solid #ffb366;
+    z-index: 3;
+  }
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: 36px;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 179, 102, 0.1) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  &:hover:after {
+    opacity: 1;
+  }
+`;
+
 const recipes = [
   {
     id: 1,
@@ -246,7 +282,7 @@ const RecipeList = () => {
         background: "#fcf9f6",
       }}
     >
-      {/* Background gradient động */}
+      {/* Gradient động ở header */}
       <div
         style={{
           position: "absolute",
@@ -259,13 +295,20 @@ const RecipeList = () => {
           borderBottomLeftRadius: "60% 40%",
           borderBottomRightRadius: "60% 40%",
           transform: "scaleX(1.2)",
+          animation: "headerGradientMove 8s ease-in-out infinite alternate",
+          backgroundSize: "200% 100%",
         }}
       />
-
-      {/* Các emoji nổi */}
+      <style>{`
+        @keyframes headerGradientMove {
+          0% { background-position: 0% 50%; }
+          100% { background-position: 100% 50%; }
+        }
+      `}</style>
+      {/* Emoji động trang trí nền */}
       <FloatingEmoji
         size="52px"
-        style={{ top: "40px", left: "10%" }}
+        style={{ top: "40px", left: "10%", filter: "blur(0.5px)" }}
         duration="7s"
         delay="1s"
       >
@@ -273,7 +316,7 @@ const RecipeList = () => {
       </FloatingEmoji>
       <FloatingEmoji
         size="48px"
-        style={{ top: "80px", right: "15%" }}
+        style={{ top: "80px", right: "15%", filter: "blur(0.5px)" }}
         duration="8s"
         delay="0.5s"
       >
@@ -281,7 +324,7 @@ const RecipeList = () => {
       </FloatingEmoji>
       <FloatingEmoji
         size="42px"
-        style={{ bottom: "120px", left: "12%" }}
+        style={{ bottom: "120px", left: "12%", filter: "blur(1px)" }}
         duration="6.5s"
         delay="2s"
       >
@@ -289,7 +332,7 @@ const RecipeList = () => {
       </FloatingEmoji>
       <FloatingEmoji
         size="46px"
-        style={{ bottom: "150px", right: "10%" }}
+        style={{ bottom: "150px", right: "10%", filter: "blur(1px)" }}
         duration="7.5s"
         delay="1.5s"
       >
@@ -297,34 +340,51 @@ const RecipeList = () => {
       </FloatingEmoji>
       <FloatingEmoji
         size="40px"
-        style={{ top: "150px", left: "30%" }}
+        style={{ top: "150px", left: "30%", filter: "blur(0.5px)" }}
         duration="8s"
         delay="0.8s"
       >
         🥕
       </FloatingEmoji>
-
-      {/* Vòng tròn có hiệu ứng pulse */}
-      <PulsingCircle
-        size="320px"
-        style={{ top: "-100px", right: "-100px" }}
-        duration="10s"
-      />
-      <PulsingCircle
-        size="280px"
-        style={{ bottom: "-80px", left: "-80px" }}
-        duration="12s"
-        delay="2s"
-      />
-      <PulsingCircle
-        size="220px"
-        style={{ top: "30%", left: "10%" }}
-        gradient="radial-gradient(circle, rgba(255,155,68,0.05) 0%, rgba(255,107,53,0.02) 70%, transparent 100%)"
-        duration="14s"
-        delay="1s"
-      />
-
-      {/* Tiêu đề có hiệu ứng lấp lánh */}
+      {/* Tiêu đề shimmer lấp lánh, underline gradient */}
+      <button
+        onClick={() => window.history.back()}
+        style={{
+          position: "absolute",
+          left: "60px",
+          top: "10px",
+          transform: "none",
+          background: "none",
+          border: "none",
+          padding: 0,
+          margin: 0,
+          cursor: "pointer",
+          zIndex: 10,
+          outline: "none",
+          lineHeight: 1,
+        }}
+        aria-label="Quay lại"
+        className="back-glow-btn"
+      >
+        <ArrowLeftOutlined
+          style={{
+            fontSize: 36,
+            color: "#ff6b35",
+            textShadow: "0 0 12px #ffb366, 0 0 24px #fff",
+          }}
+        />
+      </button>
+      <style>{`
+          .back-glow-btn:hover .anticon {
+            color: #ff8c42;
+            transform: scale(1.18);
+            text-shadow: 0 0 18px #ffb366, 0 0 32px #fff;
+            transition: all 0.18s cubic-bezier(.4,2,.6,1);
+          }
+          .back-glow-btn .anticon {
+            transition: all 0.18s cubic-bezier(.4,2,.6,1);
+          }
+        `}</style>
       <div
         style={{
           textAlign: "center",
@@ -342,6 +402,7 @@ const RecipeList = () => {
             Công Thức Nấu Ăn
           </Title>
         </ShimmerTitle>
+
         <div
           style={{
             margin: "8px auto",
@@ -349,11 +410,18 @@ const RecipeList = () => {
             height: "3px",
             background:
               "linear-gradient(90deg, transparent, #ff9a44, #ff6b35, transparent)",
-            borderRadius: "2px",
+            borderRadius: 20,
+            animation: "underlineMove 3s linear infinite alternate",
+            backgroundSize: "200% 100%",
           }}
         />
+        <style>{`
+          @keyframes underlineMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+          }
+        `}</style>
       </div>
-
       {/* Container cho danh sách công thức */}
       <div
         style={{
@@ -376,23 +444,18 @@ const RecipeList = () => {
               sm={12}
               md={8}
               lg={6}
-              style={{ display: "flex", justifyContent: "center" }}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
             >
-              <div
-                className="recipe-card"
-                style={{
-                  opacity: 0,
-                  transform: "translateY(30px)",
-                  transition: "all 0.5s ease-out",
-                }}
-              >
+              <SimpleCardWrapper className="recipe-card">
                 <RecipeCard recipe={recipe} description={recipe.description} />
-              </div>
+              </SimpleCardWrapper>
             </Col>
           ))}
         </Row>
       </div>
-
       {/* Thêm một vài hình trang trí đáy trang */}
       <div
         style={{

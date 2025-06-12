@@ -7,8 +7,11 @@ import {
   TestimonialsSection,
 } from "@/components/HomePage";
 import WelcomeMessage from "@/components/WelcomeMessage";
+
 import "@/styles/animation.css";
 import { Card, Form, Typography } from "antd";
+import ChatBotPage from "./ChatBotPage";
+
 
 const HomePage = () => {
   const [form] = Form.useForm();
@@ -37,6 +40,9 @@ const HomePage = () => {
       <TestimonialsSection />
       {/* CallToActionSection - Inline */}
       <CallToActionSection handleEmailSubmit={handleEmailSubmit} form={form} />
+      
+      {/* ChatBot */}
+      <ChatBotPage />
     </div>
   );
 };

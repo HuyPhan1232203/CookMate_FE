@@ -8,7 +8,7 @@ import { store } from "@redux/store";
 const HomePage = lazy(() => import("@/pages/HomePage"));
 const RecipePage = lazy(() => import("@pages/RecipePage"));
 const RecipeDetail = lazy(() => import("@components/Recipe/RecipeDetail"));
-const LoginPage = lazy(() => import("@pages/LoginPage"));
+const LoginPage = lazy(() => import("@/auth/LoginPage"));
 const RegisterPage = lazy(() => import("@pages/RegisterPage"));
 const ForgotPasswordPage = lazy(() => import("@pages/ForgotPasswordPage"));
 const NotFoundPage = lazy(() => import("@pages/NotFoundPage"));

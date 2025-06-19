@@ -12,7 +12,6 @@ import "@/styles/animation.css";
 import { Card, Form, Typography } from "antd";
 import ChatBotPage from "./ChatBotPage";
 
-
 const HomePage = () => {
   const [form] = Form.useForm();
 
@@ -24,10 +23,12 @@ const HomePage = () => {
   return (
     <div>
       {/* Welcome Message for logged in users */}
-      <div style={{ padding: '0 20px', maxWidth: '1200px', margin: '20px auto 0' }}>
+      <div
+        style={{ padding: "0 20px", maxWidth: "1200px", margin: "20px auto 0" }}
+      >
         <WelcomeMessage />
       </div>
-      
+
       {/* HeroSection - Inline */}
       <HeroSection />
       {/* IngredientsInput Section - Inline */}
@@ -40,7 +41,7 @@ const HomePage = () => {
       <TestimonialsSection />
       {/* CallToActionSection - Inline */}
       <CallToActionSection handleEmailSubmit={handleEmailSubmit} form={form} />
-      
+
       {/* ChatBot */}
       <ChatBotPage />
     </div>

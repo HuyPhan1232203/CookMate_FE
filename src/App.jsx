@@ -1,36 +1,53 @@
+import { App as AntApp } from "antd";
 import { Suspense, lazy } from "react";
 import { Provider } from "react-redux";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
 import MainLayout from "@layouts/MainLayout";
-import { store } from "@redux/store";
+import ProtectedRoute from "@auth/components/ProtectedRoute";
+import { persistor, store } from "@redux/store";
 
 // Lazy Load
 const HomePage = lazy(() => import("@/pages/HomePage"));
 const RecipePage = lazy(() => import("@pages/RecipePage"));
 const RecipeDetail = lazy(() => import("@components/Recipe/RecipeDetail"));
 const LoginPage = lazy(() => import("@/auth/LoginPage"));
-const RegisterPage = lazy(() => import("@pages/RegisterPage"));
-const ForgotPasswordPage = lazy(() => import("@pages/ForgotPasswordPage"));
+const RegisterPage = lazy(() => import("@/auth/RegisterPage"));
+const ForgotPasswordPage = lazy(() => import("@/auth/ForgotPasswordPage"));
 const NotFoundPage = lazy(() => import("@pages/NotFoundPage"));
 
 export default function App() {
   return (
     <Provider store={store}>
-      <Router>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path="/" element={<MainLayout />}>
-              <Route index element={<HomePage />} />
-              <Route path="recipes" element={<RecipePage />} />
-              <Route path="recipes/:id" element={<RecipeDetail />} />
-            </Route>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-      </Router>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router>
+          <AntApp>
+            <Suspense>
+              <Routes>
+                <Route path="/" element={<MainLayout />}>
+                  <Route index element={<HomePage />} />
+                  <Route path="recipes" element={<RecipePage />} />
+                  <Route
+                    path="recipes/:id"
+                    element={
+                      <ProtectedRoute>
+                        <RecipeDetail />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Route>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route
+                  path="/forgot-password"
+                  element={<ForgotPasswordPage />}
+                />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
+          </AntApp>
+        </Router>
+      </PersistGate>
     </Provider>
   );
 }

@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { APP_CONTENT } from "@constants/content";
-import axios from "axios";
-
 import LoginHeader from "./components/LoginHeader";
 import LoginForm from "./components/LoginForm";
 import BackgroundDecoration from "./components/BackgroundDecoration";
 import LoginLayout from "./components/LoginLayout";
+
 import { endpoints } from "@/config/api";
+import api from "@/config/axios";
 
 const LoginPage = () => {
+  const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -19,10 +20,12 @@ const LoginPage = () => {
       setLoading(true);
 
       // Match the API's expected request format
-      const response = await axios.post(endpoints.auth.login, {
+      const response = await api.post(endpoints.auth.login, {
         usernameOrEmail: values.email,
         password: values.password,
       });
+
+      console.log(response);
 
       // Handle successful login
       if (response.data && response.data.access_token) {
@@ -31,14 +34,16 @@ const LoginPage = () => {
         localStorage.setItem("token", response.data.access_token);
         localStorage.setItem("isAuthenticated", "true");
 
-        axios.defaults.headers.common[
+        api.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${response.data.access_token}`;
 
-        message.success(`Chào mừng ${response.data.user.fullName || "bạn"}!`);
+        messageApi.success(
+          `Chào mừng ${response.data.user.fullName || "bạn"}!`
+        );
         navigate("/");
       } else {
-        message.error("Đăng nhập không thành công. Vui lòng thử lại.");
+        messageApi.error("Đăng nhập không thành công. Vui lòng thử lại.");
       }
     } catch (error) {
       // Handle error response
@@ -47,7 +52,7 @@ const LoginPage = () => {
         error.message ||
         "Đã xảy ra lỗi khi đăng nhập. Vui lòng thử lại.";
 
-      message.error(errorMessage);
+      messageApi.error(errorMessage);
       console.error("Login error:", error);
     } finally {
       setLoading(false);
@@ -56,6 +61,7 @@ const LoginPage = () => {
 
   return (
     <LoginLayout>
+      {contextHolder}
       <BackgroundDecoration />
       <div
         style={{

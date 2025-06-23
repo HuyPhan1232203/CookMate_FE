@@ -29,15 +29,15 @@ const Header = () => {
   const menuItems = [
     {
       key: "1",
-      icon: <BookOutlined />,
-      label: <Link to="/recipes">{APP_CONTENT.HEADER.MENU_ITEMS.RECIPES}</Link>,
-    },
-    {
-      key: "2",
       icon: <HeartOutlined />,
       label: (
         <Link to="/favorites">{APP_CONTENT.HEADER.MENU_ITEMS.FAVORITES}</Link>
       ),
+    },
+    {
+      key: "2",
+      icon: <BookOutlined />,
+      label: <Link to="/recipes">{APP_CONTENT.HEADER.MENU_ITEMS.RECIPES}</Link>,
     },
     {
       key: "3",

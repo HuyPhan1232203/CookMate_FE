@@ -1,21 +1,10 @@
-import React, { useState } from 'react';
-import { 
-  Button, 
-  Form, 
-  Input, 
-  Card, 
-  Typography, 
-  message,
-  Result
-} from 'antd';
-import { 
-  MailOutlined,
-  ArrowLeftOutlined
-} from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
-import { APP_CONTENT } from '@constants/content';
-import { mockForgotPassword } from '@/data/mockUsers';
-import '@/styles/animation.css';
+import React, { useState } from "react";
+import { Button, Form, Input, Card, Typography, message, Result } from "antd";
+import { MailOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import { APP_CONTENT } from "@constants/content";
+import { mockForgotPassword } from "@/data/mockUsers";
+import "@/styles/animation.css";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -23,14 +12,14 @@ const ForgotPasswordPage = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
   const handleForgotPassword = async (values) => {
     try {
       setLoading(true);
-      
+
       const result = await mockForgotPassword(values.email);
-      
+
       setEmail(values.email);
       setEmailSent(true);
       message.success(result.message);
@@ -42,33 +31,34 @@ const ForgotPasswordPage = () => {
   };
 
   const handleResendEmail = () => {
-    message.info('Email đã được gửi lại!');
+    message.info("Email đã được gửi lại!");
   };
 
   if (emailSent) {
     return (
-      <div 
+      <div
         style={{
-          minHeight: '100vh',
-          background: 'linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa726 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '20px',
-          position: 'relative',
-          overflow: 'hidden'
+          minHeight: "100vh",
+          background:
+            "linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa726 100%)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "20px",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
-        <div 
+        <div
           style={{
-            width: '100%',
-            maxWidth: '500px',
+            width: "100%",
+            maxWidth: "500px",
           }}
         >
           {/* Background Pattern */}
           <div
             style={{
-              position: 'absolute',
+              position: "absolute",
               top: 0,
               left: 0,
               right: 0,
@@ -77,15 +67,15 @@ const ForgotPasswordPage = () => {
               opacity: 0.1,
             }}
           />
-          
+
           <Card
             style={{
-              borderRadius: '16px',
-              boxShadow: '0 20px 40px rgba(255, 107, 53, 0.15)',
-              border: 'none',
-              textAlign: 'center',
-              position: 'relative',
-              zIndex: 1
+              borderRadius: "16px",
+              boxShadow: "0 20px 40px rgba(255, 107, 53, 0.15)",
+              border: "none",
+              textAlign: "center",
+              position: "relative",
+              zIndex: 1,
             }}
             className="animate-fadeInUp"
           >
@@ -94,37 +84,45 @@ const ForgotPasswordPage = () => {
               title="Email đã được gửi!"
               subTitle={
                 <div>
-                  <Paragraph style={{ fontSize: '16px', color: '#666' }}>
-                    Chúng tôi đã gửi hướng dẫn đặt lại mật khẩu đến địa chỉ email:
+                  <Paragraph style={{ fontSize: "16px", color: "#666" }}>
+                    Chúng tôi đã gửi hướng dẫn đặt lại mật khẩu đến địa chỉ
+                    email:
                   </Paragraph>
-                  <Text strong style={{ fontSize: '16px', color: '#ff6b35' }}>
+                  <Text strong style={{ fontSize: "16px", color: "#ff6b35" }}>
                     {email}
                   </Text>
-                  <Paragraph style={{ fontSize: '14px', color: '#999', marginTop: '16px' }}>
-                    Vui lòng kiểm tra hộp thư đến (có thể cả thư mục spam) và làm theo hướng dẫn để đặt lại mật khẩu.
+                  <Paragraph
+                    style={{
+                      fontSize: "14px",
+                      color: "#999",
+                      marginTop: "16px",
+                    }}
+                  >
+                    Vui lòng kiểm tra hộp thư đến (có thể cả thư mục spam) và
+                    làm theo hướng dẫn để đặt lại mật khẩu.
                   </Paragraph>
                 </div>
               }
               extra={[
-                <Button 
-                  key="resend" 
-                  style={{ marginRight: '8px' }}
+                <Button
+                  key="resend"
+                  style={{ marginRight: "8px" }}
                   onClick={handleResendEmail}
                 >
                   Gửi lại email
                 </Button>,
-                <Button 
-                  key="login" 
+                <Button
+                  key="login"
                   type="primary"
                   style={{
-                    background: '#ff6b35',
-                    borderColor: '#ff6b35'
+                    background: "#ff6b35",
+                    borderColor: "#ff6b35",
                   }}
                 >
-                  <Link to="/login" style={{ color: 'white' }}>
+                  <Link to="/login" style={{ color: "white" }}>
                     Quay lại đăng nhập
                   </Link>
-                </Button>
+                </Button>,
               ]}
             />
           </Card>
@@ -134,22 +132,23 @@ const ForgotPasswordPage = () => {
   }
 
   return (
-    <div 
-              style={{
-          minHeight: '100vh',
-          background: 'linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa726 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '20px',
-          position: 'relative',
-          overflow: 'hidden'
-        }}
+    <div
+      style={{
+        minHeight: "100vh",
+        background:
+          "linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa726 100%)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+        position: "relative",
+        overflow: "hidden",
+      }}
     >
       {/* Background Pattern */}
       <div
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           right: 0,
@@ -162,25 +161,25 @@ const ForgotPasswordPage = () => {
       {/* 3D Floating Cooking Icons */}
       <div
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          overflow: 'hidden',
-          pointerEvents: 'none'
+          overflow: "hidden",
+          pointerEvents: "none",
         }}
       >
         {/* Coffee - top left */}
         <div
           style={{
-            position: 'absolute',
-            top: '15%',
-            left: '10%',
-            fontSize: '60px',
+            position: "absolute",
+            top: "15%",
+            left: "10%",
+            fontSize: "60px",
             opacity: 0.3,
-            transform: 'rotate(-18deg)',
-            filter: 'drop-shadow(0 6px 12px rgba(0,0,0,0.25))',
+            transform: "rotate(-18deg)",
+            filter: "drop-shadow(0 6px 12px rgba(0,0,0,0.25))",
           }}
           className="float-animation-1"
         >
@@ -190,13 +189,13 @@ const ForgotPasswordPage = () => {
         {/* Donut - top right */}
         <div
           style={{
-            position: 'absolute',
-            top: '18%',
-            right: '15%',
-            fontSize: '50px',
+            position: "absolute",
+            top: "18%",
+            right: "15%",
+            fontSize: "50px",
             opacity: 0.26,
-            transform: 'rotate(22deg)',
-            filter: 'drop-shadow(0 5px 10px rgba(0,0,0,0.2))',
+            transform: "rotate(22deg)",
+            filter: "drop-shadow(0 5px 10px rgba(0,0,0,0.2))",
           }}
           className="float-animation-2"
         >
@@ -206,13 +205,13 @@ const ForgotPasswordPage = () => {
         {/* Cookie - left middle */}
         <div
           style={{
-            position: 'absolute',
-            top: '40%',
-            left: '8%',
-            fontSize: '45px',
+            position: "absolute",
+            top: "40%",
+            left: "8%",
+            fontSize: "45px",
             opacity: 0.24,
-            transform: 'rotate(-35deg)',
-            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.18))',
+            transform: "rotate(-35deg)",
+            filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.18))",
           }}
           className="float-animation-3"
         >
@@ -222,13 +221,13 @@ const ForgotPasswordPage = () => {
         {/* Ice cream - right middle */}
         <div
           style={{
-            position: 'absolute',
-            top: '45%',
-            right: '12%',
-            fontSize: '48px',
+            position: "absolute",
+            top: "45%",
+            right: "12%",
+            fontSize: "48px",
             opacity: 0.28,
-            transform: 'rotate(28deg)',
-            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))',
+            transform: "rotate(28deg)",
+            filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.2))",
           }}
           className="float-animation-4"
         >
@@ -238,13 +237,13 @@ const ForgotPasswordPage = () => {
         {/* Banana - bottom left */}
         <div
           style={{
-            position: 'absolute',
-            bottom: '25%',
-            left: '18%',
-            fontSize: '38px',
+            position: "absolute",
+            bottom: "25%",
+            left: "18%",
+            fontSize: "38px",
             opacity: 0.22,
-            transform: 'rotate(-15deg)',
-            filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.15))',
+            transform: "rotate(-15deg)",
+            filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.15))",
           }}
           className="float-animation-5"
         >
@@ -254,60 +253,60 @@ const ForgotPasswordPage = () => {
         {/* Strawberry - bottom right */}
         <div
           style={{
-            position: 'absolute',
-            bottom: '20%',
-            right: '20%',
-            fontSize: '35px',
+            position: "absolute",
+            bottom: "20%",
+            right: "20%",
+            fontSize: "35px",
             opacity: 0.25,
-            transform: 'rotate(30deg)',
-            filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.18))',
+            transform: "rotate(30deg)",
+            filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.18))",
           }}
           className="float-animation-6"
         >
           🍓
         </div>
       </div>
-      
-      <div 
+
+      <div
         style={{
-          width: '100%',
-          maxWidth: '400px',
-          position: 'relative',
-          zIndex: 1
+          width: "100%",
+          maxWidth: "400px",
+          position: "relative",
+          zIndex: 1,
         }}
       >
         {/* Logo and Title */}
-        <div 
+        <div
           style={{
-            textAlign: 'center',
-            marginBottom: '32px'
+            textAlign: "center",
+            marginBottom: "32px",
           }}
           className="animate-fadeInUp"
         >
-          <div 
+          <div
             style={{
-              fontSize: '3rem',
-              marginBottom: '16px'
+              fontSize: "3rem",
+              marginBottom: "16px",
             }}
           >
             🔐
           </div>
-          <Title 
-            level={2} 
+          <Title
+            level={2}
             style={{
-              color: 'white',
-              marginBottom: '8px',
-              fontWeight: 'bold',
-              textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+              color: "white",
+              marginBottom: "8px",
+              fontWeight: "bold",
+              textShadow: "0 2px 4px rgba(0,0,0,0.3)",
             }}
           >
             Quên mật khẩu?
           </Title>
-          <Text 
+          <Text
             style={{
-              color: 'rgba(255,255,255,0.9)',
-              fontSize: '16px',
-              textShadow: '0 1px 2px rgba(0,0,0,0.3)'
+              color: "rgba(255,255,255,0.9)",
+              fontSize: "16px",
+              textShadow: "0 1px 2px rgba(0,0,0,0.3)",
             }}
           >
             Nhập email của bạn để nhận hướng dẫn đặt lại mật khẩu
@@ -317,9 +316,9 @@ const ForgotPasswordPage = () => {
         {/* Forgot Password Form */}
         <Card
           style={{
-            borderRadius: '16px',
-            boxShadow: '0 20px 40px rgba(255, 107, 53, 0.15)',
-            border: 'none'
+            borderRadius: "16px",
+            boxShadow: "0 20px 40px rgba(255, 107, 53, 0.15)",
+            border: "none",
           }}
           className="animate-fadeInUp animate-delay-1"
         >
@@ -334,14 +333,14 @@ const ForgotPasswordPage = () => {
               name="email"
               label="Email"
               rules={[
-                { required: true, message: 'Vui lòng nhập email!' },
-                { type: 'email', message: 'Email không hợp lệ!' }
+                { required: true, message: "Vui lòng nhập email!" },
+                { type: "email", message: "Email không hợp lệ!" },
               ]}
             >
               <Input
-                prefix={<MailOutlined style={{ color: '#ff6b35' }} />}
+                prefix={<MailOutlined style={{ color: "#ff6b35" }} />}
                 placeholder="Nhập email của bạn"
-                style={{ borderRadius: '8px' }}
+                style={{ borderRadius: "8px" }}
               />
             </Form.Item>
 
@@ -352,33 +351,33 @@ const ForgotPasswordPage = () => {
                 loading={loading}
                 block
                 style={{
-                  height: '48px',
-                  borderRadius: '8px',
-                  background: '#ff6b35',
-                  borderColor: '#ff6b35',
-                  fontSize: '16px',
-                  fontWeight: '600'
+                  height: "48px",
+                  borderRadius: "8px",
+                  background: "#ff6b35",
+                  borderColor: "#ff6b35",
+                  fontSize: "16px",
+                  fontWeight: "600",
                 }}
               >
-                {loading ? 'Đang gửi...' : 'Gửi hướng dẫn đặt lại mật khẩu'}
+                {loading ? "Đang gửi..." : "Gửi hướng dẫn đặt lại mật khẩu"}
               </Button>
             </Form.Item>
 
-            <div 
+            <div
               style={{
-                textAlign: 'center',
-                marginTop: '24px'
+                textAlign: "center",
+                marginTop: "24px",
               }}
             >
-              <Link 
+              <Link
                 to="/login"
-                style={{ 
-                  color: '#ff6b35',
-                  fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px'
+                style={{
+                  color: "#ff6b35",
+                  fontWeight: "600",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
                 }}
               >
                 <ArrowLeftOutlined />
@@ -389,22 +388,21 @@ const ForgotPasswordPage = () => {
         </Card>
 
         {/* Help text */}
-        <div 
+        <div
           style={{
-            textAlign: 'center',
-            marginTop: '24px',
-            padding: '16px',
-            backgroundColor: 'rgba(255, 255, 255, 0.7)',
-            borderRadius: '8px'
+            textAlign: "center",
+            marginTop: "24px",
+            padding: "16px",
+            backgroundColor: "rgba(255, 255, 255, 0.7)",
+            borderRadius: "8px",
           }}
           className="animate-fadeInUp animate-delay-2"
         >
-          <Text style={{ color: '#666', fontSize: '14px' }}>
-            💡 <strong>Mẹo:</strong> Kiểm tra cả thư mục spam nếu bạn không thấy email trong hộp thư đến.
+          <Text style={{ color: "#666", fontSize: "14px" }}>
+            💡 <strong>Mẹo:</strong> Kiểm tra cả thư mục spam nếu bạn không thấy
+            email trong hộp thư đến.
           </Text>
         </div>
-
-        
       </div>
 
       <style>{`
@@ -556,4 +554,4 @@ const ForgotPasswordPage = () => {
   );
 };
 
-export default ForgotPasswordPage; 
+export default ForgotPasswordPage;

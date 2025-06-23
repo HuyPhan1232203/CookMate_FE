@@ -1,28 +1,30 @@
-import React, { useState } from 'react';
-import { 
-  Button, 
-  Form, 
-  Input, 
-  Card, 
-  Typography, 
-  Space, 
-  Divider, 
+import React, { useState } from "react";
+import {
+  Button,
+  Form,
+  Input,
+  Card,
+  Typography,
+  Space,
+  Divider,
   Checkbox,
-  message 
-} from 'antd';
-import { 
-  UserOutlined, 
-  LockOutlined, 
+  message,
+} from "antd";
+import {
+  UserOutlined,
+  LockOutlined,
   MailOutlined,
-  GoogleOutlined, 
+  GoogleOutlined,
   FacebookOutlined,
   EyeInvisibleOutlined,
-  EyeTwoTone
-} from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
-import { APP_CONTENT } from '@constants/content';
-import axios from 'axios';
-import '@/styles/animation.css';
+  EyeTwoTone,
+} from "@ant-design/icons";
+import { Link, useNavigate } from "react-router-dom";
+import { APP_CONTENT } from "@constants/content";
+
+import { endpoints } from "@/config/api";
+import "@/styles/animation.css";
+import api from "@/config/axios";
 
 const { Title, Text } = Typography;
 
@@ -32,96 +34,62 @@ const RegisterPage = () => {
   const navigate = useNavigate();
 
   const handleRegister = async (values) => {
+    setLoading(true);
     try {
-      setLoading(true);
-      
       const userData = {
-        name: values.name,
+        username: values.name,
         email: values.email,
-        password: values.password
+        password: values.password,
       };
-      
-      // Temporary mock registration when backend is not available
-      try {
-        // Try real API first
-        const response = await axios.post('/api/user/register', userData);
-        
-        // Handle successful registration
-        if (response.data && response.status === 200) {
-          localStorage.setItem('user', JSON.stringify(response.data.user || { name: values.name, email: values.email }));
-          localStorage.setItem('token', response.data.token || 'temp-token');
-          localStorage.setItem('isAuthenticated', 'true');
-          
-          message.success(`Chào mừng ${response.data.user?.name || values.name} đến với CookMate!`);
-          navigate('/');
-        } else {
-          message.error('Đăng ký thất bại!');
-        }
-      } catch (apiError) {
-        // If API is not available (404), use mock registration
-        if (apiError.response?.status === 404) {
-          console.log('Backend not available, using mock registration');
-          
-          // Simulate API delay
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          
-          // Mock successful registration
-          const mockUser = {
-            id: Date.now(),
-            name: values.name,
-            email: values.email,
-            createdAt: new Date().toISOString()
-          };
-          
-          localStorage.setItem('user', JSON.stringify(mockUser));
-          localStorage.setItem('token', 'mock-token-' + Date.now());
-          localStorage.setItem('isAuthenticated', 'true');
-          
-          message.success(`Chào mừng ${values.name} đến với CookMate! (Mock Mode)`);
-          navigate('/');
-        } else {
-          throw apiError; // Re-throw other errors
-        }
+
+      const response = await api.post(endpoints.auth.register, userData);
+
+      if (response.status === 201 || response.status === 200) {
+        message.success("Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.");
+        navigate("/login");
+      } else {
+        message.error(
+          response.data?.message || "Đăng ký thất bại. Vui lòng thử lại."
+        );
       }
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error("Lỗi đăng ký:", error);
       if (error.response?.data?.message) {
         message.error(error.response.data.message);
       } else if (error.response?.status === 409) {
-        message.error('Email này đã được sử dụng!');
+        message.error("Email này đã được sử dụng!");
       } else if (error.response?.status === 400) {
-        message.error('Thông tin đăng ký không hợp lệ!');
-      } else if (error.code === 'ECONNREFUSED') {
-        message.error('Không thể kết nối đến server. Vui lòng kiểm tra server có đang chạy tại localhost:3000');
+        message.error("Thông tin đăng ký không hợp lệ!");
+      } else if (error.code === "ECONNREFUSED") {
+        message.error("Không thể kết nối đến server. Vui lòng kiểm tra lại.");
       } else {
-        message.error('Có lỗi xảy ra trong quá trình đăng ký. Vui lòng thử lại!');
+        message.error(
+          "Có lỗi xảy ra trong quá trình đăng ký. Vui lòng thử lại!"
+        );
       }
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSocialLogin = (provider) => {
-    message.info(`Đăng ký với ${provider} sẽ được triển khai sớm!`);
-  };
-
   return (
-    <div 
+    <div
       style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa726 100%)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '20px',
-        position: 'relative',
-        overflow: 'hidden'
+        minHeight: "100vh",
+        background:
+          "linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa726 100%)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
       {/* Background Pattern */}
       <div
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           right: 0,
@@ -134,25 +102,25 @@ const RegisterPage = () => {
       {/* 3D Floating Cooking Icons */}
       <div
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          overflow: 'hidden',
-          pointerEvents: 'none'
+          overflow: "hidden",
+          pointerEvents: "none",
         }}
       >
         {/* Pizza - top center */}
         <div
           style={{
-            position: 'absolute',
-            top: '8%',
-            left: '18%',
-            fontSize: '75px',
+            position: "absolute",
+            top: "8%",
+            left: "18%",
+            fontSize: "75px",
             opacity: 0.34,
-            transform: 'rotate(-20deg)',
-            filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.3))',
+            transform: "rotate(-20deg)",
+            filter: "drop-shadow(0 8px 16px rgba(0,0,0,0.3))",
           }}
           className="float-animation-1"
         >
@@ -162,13 +130,13 @@ const RegisterPage = () => {
         {/* Cooking pot - top right */}
         <div
           style={{
-            position: 'absolute',
-            top: '12%',
-            right: '12%',
-            fontSize: '65px',
+            position: "absolute",
+            top: "12%",
+            right: "12%",
+            fontSize: "65px",
             opacity: 0.31,
-            transform: 'rotate(25deg)',
-            filter: 'drop-shadow(0 6px 12px rgba(0,0,0,0.25))',
+            transform: "rotate(25deg)",
+            filter: "drop-shadow(0 6px 12px rgba(0,0,0,0.25))",
           }}
           className="float-animation-2"
         >
@@ -178,13 +146,13 @@ const RegisterPage = () => {
         {/* Avocado - left middle */}
         <div
           style={{
-            position: 'absolute',
-            top: '32%',
-            left: '6%',
-            fontSize: '42px',
+            position: "absolute",
+            top: "32%",
+            left: "6%",
+            fontSize: "42px",
             opacity: 0.27,
-            transform: 'rotate(-35deg)',
-            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))',
+            transform: "rotate(-35deg)",
+            filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.2))",
           }}
           className="float-animation-3"
         >
@@ -194,13 +162,13 @@ const RegisterPage = () => {
         {/* Hamburger - right middle */}
         <div
           style={{
-            position: 'absolute',
-            top: '38%',
-            right: '7%',
-            fontSize: '50px',
+            position: "absolute",
+            top: "38%",
+            right: "7%",
+            fontSize: "50px",
             opacity: 0.29,
-            transform: 'rotate(40deg)',
-            filter: 'drop-shadow(0 5px 10px rgba(0,0,0,0.25))',
+            transform: "rotate(40deg)",
+            filter: "drop-shadow(0 5px 10px rgba(0,0,0,0.25))",
           }}
           className="float-animation-4"
         >
@@ -210,13 +178,13 @@ const RegisterPage = () => {
         {/* Egg - bottom left */}
         <div
           style={{
-            position: 'absolute',
-            bottom: '28%',
-            left: '10%',
-            fontSize: '38px',
+            position: "absolute",
+            bottom: "28%",
+            left: "10%",
+            fontSize: "38px",
             opacity: 0.23,
-            transform: 'rotate(-12deg)',
-            filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.2))',
+            transform: "rotate(-12deg)",
+            filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.2))",
           }}
           className="float-animation-5"
         >
@@ -226,13 +194,13 @@ const RegisterPage = () => {
         {/* Croissant - bottom right */}
         <div
           style={{
-            position: 'absolute',
-            bottom: '22%',
-            right: '13%',
-            fontSize: '36px',
+            position: "absolute",
+            bottom: "22%",
+            right: "13%",
+            fontSize: "36px",
             opacity: 0.25,
-            transform: 'rotate(28deg)',
-            filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.2))',
+            transform: "rotate(28deg)",
+            filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.2))",
           }}
           className="float-animation-6"
         >
@@ -242,13 +210,13 @@ const RegisterPage = () => {
         {/* Grapes - top left */}
         <div
           style={{
-            position: 'absolute',
-            top: '22%',
-            left: '22%',
-            fontSize: '28px',
+            position: "absolute",
+            top: "22%",
+            left: "22%",
+            fontSize: "28px",
             opacity: 0.19,
-            transform: 'rotate(-50deg)',
-            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))',
+            transform: "rotate(-50deg)",
+            filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.15))",
           }}
           className="float-animation-7"
         >
@@ -258,13 +226,13 @@ const RegisterPage = () => {
         {/* Cake - middle right */}
         <div
           style={{
-            position: 'absolute',
-            top: '58%',
-            right: '18%',
-            fontSize: '40px',
+            position: "absolute",
+            top: "58%",
+            right: "18%",
+            fontSize: "40px",
             opacity: 0.28,
-            transform: 'rotate(18deg)',
-            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))',
+            transform: "rotate(18deg)",
+            filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.2))",
           }}
           className="float-animation-8"
         >
@@ -274,13 +242,13 @@ const RegisterPage = () => {
         {/* Apple - bottom center */}
         <div
           style={{
-            position: 'absolute',
-            bottom: '18%',
-            left: '42%',
-            fontSize: '34px',
+            position: "absolute",
+            bottom: "18%",
+            left: "42%",
+            fontSize: "34px",
             opacity: 0.21,
-            transform: 'rotate(-25deg)',
-            filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.15))',
+            transform: "rotate(-25deg)",
+            filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.15))",
           }}
           className="float-animation-9"
         >
@@ -290,60 +258,60 @@ const RegisterPage = () => {
         {/* Wine glass - middle left */}
         <div
           style={{
-            position: 'absolute',
-            top: '52%',
-            left: '9%',
-            fontSize: '33px',
+            position: "absolute",
+            top: "52%",
+            left: "9%",
+            fontSize: "33px",
             opacity: 0.22,
-            transform: 'rotate(55deg)',
-            filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.18))',
+            transform: "rotate(55deg)",
+            filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.18))",
           }}
           className="float-animation-10"
         >
           🍷
         </div>
       </div>
-      
-      <div 
+
+      <div
         style={{
-          width: '100%',
-          maxWidth: '450px',
-          position: 'relative',
-          zIndex: 1
+          width: "100%",
+          maxWidth: "450px",
+          position: "relative",
+          zIndex: 1,
         }}
       >
         {/* Logo and Welcome */}
-        <div 
+        <div
           style={{
-            textAlign: 'center',
-            marginBottom: '32px'
+            textAlign: "center",
+            marginBottom: "32px",
           }}
           className="animate-fadeInUp"
         >
-          <div 
+          <div
             style={{
-              fontSize: '3rem',
-              marginBottom: '16px'
+              fontSize: "3rem",
+              marginBottom: "16px",
             }}
           >
             🍳
           </div>
-          <Title 
-            level={2} 
+          <Title
+            level={2}
             style={{
-              color: 'white',
-              marginBottom: '8px',
-              fontWeight: 'bold',
-              textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+              color: "white",
+              marginBottom: "8px",
+              fontWeight: "bold",
+              textShadow: "0 2px 4px rgba(0,0,0,0.3)",
             }}
           >
             Tham gia {APP_CONTENT.APP_NAME}!
           </Title>
-          <Text 
+          <Text
             style={{
-              color: 'rgba(255,255,255,0.9)',
-              fontSize: '16px',
-              textShadow: '0 1px 2px rgba(0,0,0,0.3)'
+              color: "rgba(255,255,255,0.9)",
+              fontSize: "16px",
+              textShadow: "0 1px 2px rgba(0,0,0,0.3)",
             }}
           >
             Tạo tài khoản để bắt đầu hành trình nấu ăn tuyệt vời
@@ -353,9 +321,9 @@ const RegisterPage = () => {
         {/* Register Form */}
         <Card
           style={{
-            borderRadius: '16px',
-            boxShadow: '0 20px 40px rgba(255, 107, 53, 0.15)',
-            border: 'none'
+            borderRadius: "16px",
+            boxShadow: "0 20px 40px rgba(255, 107, 53, 0.15)",
+            border: "none",
           }}
           className="animate-fadeInUp animate-delay-1"
         >
@@ -370,14 +338,14 @@ const RegisterPage = () => {
               name="name"
               label="Tên"
               rules={[
-                { required: true, message: 'Vui lòng nhập tên!' },
-                { min: 2, message: 'Tên phải có ít nhất 2 ký tự!' }
+                { required: true, message: "Vui lòng nhập tên!" },
+                { min: 2, message: "Tên phải có ít nhất 2 ký tự!" },
               ]}
             >
               <Input
-                prefix={<UserOutlined style={{ color: '#ff6b35' }} />}
+                prefix={<UserOutlined style={{ color: "#ff6b35" }} />}
                 placeholder="Nhập tên của bạn"
-                style={{ borderRadius: '8px' }}
+                style={{ borderRadius: "8px" }}
               />
             </Form.Item>
 
@@ -385,14 +353,14 @@ const RegisterPage = () => {
               name="email"
               label="Email"
               rules={[
-                { required: true, message: 'Vui lòng nhập email!' },
-                { type: 'email', message: 'Email không hợp lệ!' }
+                { required: true, message: "Vui lòng nhập email!" },
+                { type: "email", message: "Email không hợp lệ!" },
               ]}
             >
               <Input
-                prefix={<MailOutlined style={{ color: '#ff6b35' }} />}
+                prefix={<MailOutlined style={{ color: "#ff6b35" }} />}
                 placeholder="Nhập email của bạn"
-                style={{ borderRadius: '8px' }}
+                style={{ borderRadius: "8px" }}
               />
             </Form.Item>
 
@@ -400,15 +368,17 @@ const RegisterPage = () => {
               name="password"
               label="Mật khẩu"
               rules={[
-                { required: true, message: 'Vui lòng nhập mật khẩu!' },
-                { min: 6, message: 'Mật khẩu phải có ít nhất 6 ký tự!' }
+                { required: true, message: "Vui lòng nhập mật khẩu!" },
+                { min: 6, message: "Mật khẩu phải có ít nhất 6 ký tự!" },
               ]}
             >
               <Input.Password
-                prefix={<LockOutlined style={{ color: '#ff6b35' }} />}
+                prefix={<LockOutlined style={{ color: "#ff6b35" }} />}
                 placeholder="Tạo mật khẩu"
-                style={{ borderRadius: '8px' }}
-                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                style={{ borderRadius: "8px" }}
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
               />
             </Form.Item>
 
@@ -418,17 +388,21 @@ const RegisterPage = () => {
               rules={[
                 {
                   validator: (_, value) =>
-                    value ? Promise.resolve() : Promise.reject(new Error('Vui lòng đồng ý với điều khoản!')),
+                    value
+                      ? Promise.resolve()
+                      : Promise.reject(
+                          new Error("Vui lòng đồng ý với điều khoản!")
+                        ),
                 },
               ]}
             >
               <Checkbox>
-                Tôi đồng ý với{' '}
-                <Link to="/terms" style={{ color: '#ff6b35' }}>
+                Tôi đồng ý với{" "}
+                <Link to="/terms" style={{ color: "#ff6b35" }}>
                   Điều khoản sử dụng
-                </Link>
-                {' '}và{' '}
-                <Link to="/privacy" style={{ color: '#ff6b35' }}>
+                </Link>{" "}
+                và{" "}
+                <Link to="/privacy" style={{ color: "#ff6b35" }}>
                   Chính sách bảo mật
                 </Link>
               </Checkbox>
@@ -441,33 +415,31 @@ const RegisterPage = () => {
                 loading={loading}
                 block
                 style={{
-                  height: '48px',
-                  borderRadius: '8px',
-                  background: '#ff6b35',
-                  borderColor: '#ff6b35',
-                  fontSize: '16px',
-                  fontWeight: '600'
+                  height: "48px",
+                  borderRadius: "8px",
+                  background: "#ff6b35",
+                  borderColor: "#ff6b35",
+                  fontSize: "16px",
+                  fontWeight: "600",
                 }}
               >
-                {loading ? 'Đang tạo tài khoản...' : 'Tạo tài khoản'}
+                {loading ? "Đang tạo tài khoản..." : "Tạo tài khoản"}
               </Button>
             </Form.Item>
 
-            
-
-            <div 
+            <div
               style={{
-                textAlign: 'center',
-                marginTop: '24px'
+                textAlign: "center",
+                marginTop: "24px",
               }}
             >
-              <Text style={{ color: '#666' }}>
-                Đã có tài khoản?{' '}
-                <Link 
+              <Text style={{ color: "#666" }}>
+                Đã có tài khoản?{" "}
+                <Link
                   to="/login"
-                  style={{ 
-                    color: '#ff6b35',
-                    fontWeight: '600'
+                  style={{
+                    color: "#ff6b35",
+                    fontWeight: "600",
                   }}
                 >
                   Đăng nhập ngay
@@ -476,7 +448,6 @@ const RegisterPage = () => {
             </div>
           </Form>
         </Card>
-
       </div>
 
       <style>{`
@@ -696,4 +667,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage; 
+export default RegisterPage;

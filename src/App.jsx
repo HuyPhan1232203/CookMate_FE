@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import MainLayout from "@layouts/MainLayout";
-import ProtectedRoute from "@auth/components/ProtectedRoute";
+
 import { persistor, store } from "@redux/store";
 
 // Lazy Load
@@ -27,14 +27,7 @@ export default function App() {
                 <Route path="/" element={<MainLayout />}>
                   <Route index element={<HomePage />} />
                   <Route path="recipes" element={<RecipePage />} />
-                  <Route
-                    path="recipes/:id"
-                    element={
-                      <ProtectedRoute>
-                        <RecipeDetail />
-                      </ProtectedRoute>
-                    }
-                  />
+                  <Route path="recipes/:id" element={<RecipeDetail />} />
                 </Route>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />

@@ -137,8 +137,32 @@ export const mockForgotPassword = async (email) => {
 // Test accounts info for display
 export const TEST_ACCOUNTS = [
   {
-    email: "john@example.com",
-    password: "password123",
+    email: "vy@gmail.com",
+    password: "123456",
+    role: "User",
+    description: "Tài khoản người dùng thường",
+  },
+  {
+    email: "hoi@gmail.com",
+    password: "123456",
+    role: "User",
+    description: "Tài khoản người dùng thường",
+  },
+  {
+    email: "duong@gmail.com",
+    password: "123456",
+    role: "User",
+    description: "Tài khoản người dùng thường",
+  },
+  {
+    email: "hung@gmail.com",
+    password: "123456",
+    role: "User",
+    description: "Tài khoản người dùng thường",
+  },
+  {
+    email: "huy@gmail.com",
+    password: "123456",
     role: "User",
     description: "Tài khoản người dùng thường",
   },

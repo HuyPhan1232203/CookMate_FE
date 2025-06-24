@@ -14,6 +14,7 @@ const { Text } = Typography;
 
 const UserProfile = ({ user }) => {
   const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
 
   const handleLogout = () => {
     // Clear localStorage
@@ -71,7 +72,7 @@ const UserProfile = ({ user }) => {
       key: "profile",
       icon: <UserOutlined />,
       label: "Thông tin cá nhân",
-      onClick: () => navigate("/profile"),
+      onClick: () => navigate(`/users/${userId}`),
     },
     {
       key: "my-recipes",

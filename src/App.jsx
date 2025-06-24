@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import MainLayout from "@layouts/MainLayout";
 
 import { persistor, store } from "@redux/store";
+import { ProfilePage } from "./pages/ProfilePage";
 
 // Lazy Load
 const HomePage = lazy(() => import("@/pages/HomePage"));
@@ -28,6 +29,7 @@ export default function App() {
                   <Route index element={<HomePage />} />
                   <Route path="recipes" element={<RecipePage />} />
                   <Route path="recipes/:id" element={<RecipeDetail />} />
+                  <Route path="users/:id" element={<ProfilePage />} />
                 </Route>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />

@@ -31,6 +31,7 @@ const LoginPage = () => {
       if (response.data && response.data.access_token) {
         // Store user data in localStorage
         localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("userId", response.data.user.userId);
         localStorage.setItem("token", response.data.access_token);
         localStorage.setItem("isAuthenticated", "true");
 

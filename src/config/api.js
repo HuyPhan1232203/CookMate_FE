@@ -21,8 +21,8 @@ export const endpoints = {
     delete: (id) => `${API_BASE_URL}/users/${id}`,
   },
   ai: {
-    ingredients: `${API_BASE_URL}/ai/recipes/generate`,
-    cooking: (id) => `${API_BASE_URL}/ai/recipes/${id}/cooking-steps`,
+    generateRecipes: `${API_BASE_URL}/ai/recipes/generate`,
+    cookingSteps: (recipeId) => `${API_BASE_URL}/ai/recipes/${recipeId}/cooking-steps`,
   },
   // Add more endpoints as needed
 };

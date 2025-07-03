@@ -1,10 +1,12 @@
+/* eslint-disable no-unused-vars */
 import AppButton from "@/ultils/AppButton";
-import { recipes } from "@/ultils/data";
+// import { recipes } from "@/ultils/data"; // Bỏ mock data
 import { useEffect, useRef, useState } from "react";
 import FloatingEmojis from "./FloatingEmojis";
 import RecipeListHeader from "./RecipeListHeader";
 import RecipeRow from "./RecipeRow";
-import { Skeleton } from "antd";
+import { Skeleton, message } from "antd";
+import api from "@/config/axios";
 
 // Hàm loại bỏ dấu tiếng Việt
 function removeVietnameseTones(str) {
@@ -16,31 +18,50 @@ function removeVietnameseTones(str) {
 }
 
 const RecipeList = () => {
-  // Responsive: số card mỗi hàng theo breakpoint lớn nhất (lg=6 => 4 card/hàng)
   const cardsPerRow = 4;
   const rowRefs = useRef([]);
-  const [visibleCount, setVisibleCount] = useState(4);
+  const [recipes, setRecipes] = useState([]);
+  const [meta, setMeta] = useState({ totalPages: 1, currentPage: 1 });
   const [loading, setLoading] = useState(true);
   const [searchValue, setSearchValue] = useState("");
+  const [error, setError] = useState(null);
 
+  // Fetch API khi đổi trang hoặc search
   useEffect(() => {
+    let isMounted = true;
     setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
+    setError(null);
+    const fetchRecipes = async () => {
+      try {
+        const res = await api.get(`/recipes?page=${meta.currentPage}&limit=12`);
+        if (isMounted) {
+          setRecipes(res.data.data);
+          setMeta(res.data.meta);
+        }
+      } catch (err) {
+        setError("Không thể tải danh sách công thức!");
+        message.error("Không thể tải danh sách công thức!");
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+    fetchRecipes();
+    return () => {
+      isMounted = false;
+    };
+  }, [meta.currentPage]);
 
-  // Lọc recipes theo searchValue (không phân biệt hoa thường và dấu)
+  // Lọc recipes theo searchValue (không phân biệt hoa thường, dấu)
   const filteredRecipes = recipes.filter((r) =>
-    removeVietnameseTones(r.title.toLowerCase()).includes(
+    removeVietnameseTones((r.name || r.title || "").toLowerCase()).includes(
       removeVietnameseTones(searchValue.toLowerCase())
     )
   );
 
-  // Chia recipes thành từng hàng, chỉ lấy visibleCount món đầu
-  const visibleRecipes = filteredRecipes.slice(0, visibleCount);
+  // Chia filteredRecipes thành từng hàng
   const rows = [];
-  for (let i = 0; i < visibleRecipes.length; i += cardsPerRow) {
-    rows.push(visibleRecipes.slice(i, i + cardsPerRow));
+  for (let i = 0; i < filteredRecipes.length; i += cardsPerRow) {
+    rows.push(filteredRecipes.slice(i, i + cardsPerRow));
   }
 
   useEffect(() => {
@@ -140,6 +161,10 @@ const RecipeList = () => {
               </div>
             ))}
           </div>
+        ) : error ? (
+          <div style={{ color: "red", textAlign: "center", margin: 32 }}>
+            {error}
+          </div>
         ) : (
           rows.map((row, rowIdx) => (
             <RecipeRow
@@ -177,26 +202,45 @@ const RecipeList = () => {
           zIndex: -1,
         }}
       />
-      {visibleCount < filteredRecipes.length && !loading && (
-        <div style={{ textAlign: "center", marginTop: 32 }}>
-          <AppButton
-            onClick={() =>
-              setVisibleCount((c) => Math.min(c + 4, filteredRecipes.length))
-            }
-            bg="#ff6b35"
-            color="#fff"
-            size="18px"
-            radius="12px"
-            style={{
-              fontWeight: 700,
-              padding: "10px 36px",
-              boxShadow: "0 2px 12px #ffb36644",
-            }}
-          >
-            Show More
-          </AppButton>
-        </div>
-      )}
+      {/* Phân trang */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: 16,
+          marginTop: 32,
+        }}
+      >
+        <AppButton
+          onClick={() =>
+            meta.currentPage > 1 &&
+            setMeta((m) => ({ ...m, currentPage: m.currentPage - 1 }))
+          }
+          bg="#ff6b35"
+          color="#fff"
+          size="16px"
+          radius="12px"
+          disabled={meta.currentPage === 1}
+        >
+          Prev
+        </AppButton>
+        <span style={{ alignSelf: "center", fontWeight: 600, fontSize: 16 }}>
+          Trang {meta.currentPage} / {meta.totalPages}
+        </span>
+        <AppButton
+          onClick={() =>
+            meta.currentPage < meta.totalPages &&
+            setMeta((m) => ({ ...m, currentPage: m.currentPage + 1 }))
+          }
+          bg="#ff6b35"
+          color="#fff"
+          size="16px"
+          radius="12px"
+          disabled={meta.currentPage === meta.totalPages}
+        >
+          Next
+        </AppButton>
+      </div>
     </div>
   );
 };

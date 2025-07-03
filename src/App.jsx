@@ -9,6 +9,7 @@ const HomePage = lazy(() => import("@/pages/HomePage"));
 const RecipePage = lazy(() => import("@pages/RecipePage"));
 const RecipeDetail = lazy(() => import("@components/Recipe/RecipeDetail"));
 const NotFoundPage = lazy(() => import("@pages/NotFoundPage"));
+const FavoritePage = lazy(() => import("@/pages/FavoritePage"));
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
               <Route index element={<HomePage />} />
               <Route path="recipes" element={<RecipePage />} />
               <Route path="recipes/:id" element={<RecipeDetail />} />
+              <Route path="favorites" element={<FavoritePage />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

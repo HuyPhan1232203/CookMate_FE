@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "antd";
 import { useParams } from "react-router-dom";
 import NotFoundPage from "@/pages/NotFoundPage";
-import { recipes } from "@/constants/Recipe/ListDetail";
+// import { useSelector } from "react-redux";
 import RecipeImageSection from "./RecipeImageSection";
 import RecipeInfoSection from "./RecipeInfoSection";
+import api from "@/config/axios";
 
 const RecipeDetail = () => {
   const { id } = useParams();
-  const recipe = recipes.find((r) => r.id === Number(id));
+  const [recipe, setRecipe] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchAllRecipes = async () => {
+      setLoading(true);
+      try {
+        // Lấy tất cả recipe (giả sử limit đủ lớn)
+        const res = await api.get("/recipes?page=1&limit=1000");
+        const found = res.data.data.find((r) => r.id === id);
+        setRecipe(found);
+      } catch {
+        setRecipe(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAllRecipes();
+  }, [id]);
+
+  if (loading)
+    return (
+      <div style={{ textAlign: "center", marginTop: 40 }}>Đang tải...</div>
+    );
   if (!recipe) return <NotFoundPage />;
 
   return (
@@ -134,7 +157,7 @@ const RecipeDetail = () => {
                 overflow: "hidden",
               }}
             >
-              <RecipeImageSection title={recipe.title} image={recipe.image} />
+              <RecipeImageSection title={recipe.name} image={recipe.image} />
               <RecipeInfoSection recipe={recipe} />
             </div>
           </Card>

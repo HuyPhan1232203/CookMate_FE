@@ -20,27 +20,27 @@ const Header = () => {
   const location = useLocation();
 
   const getSelectedKey = () => {
-    if (location.pathname.startsWith("/favorites")) return "1";
-    if (location.pathname.startsWith("/recipes")) return "2";
-    if (location.pathname.startsWith("/search")) return "3";
+    if (location.pathname.startsWith("/favorites")) return "favorites";
+    if (location.pathname.startsWith("/recipes")) return "recipes";
+    if (location.pathname.startsWith("/search")) return "search";
     return "";
   };
 
   const menuItems = [
     {
-      key: "1",
+      key: "recipes",
       icon: <BookOutlined />,
       label: <Link to="/recipes">{APP_CONTENT.HEADER.MENU_ITEMS.RECIPES}</Link>,
     },
     {
-      key: "2",
+      key: "favorites",
       icon: <HeartOutlined />,
       label: (
         <Link to="/favorites">{APP_CONTENT.HEADER.MENU_ITEMS.FAVORITES}</Link>
       ),
     },
     {
-      key: "3",
+      key: "search",
       icon: <SearchOutlined />,
       label: APP_CONTENT.HEADER.MENU_ITEMS.SEARCH,
     },

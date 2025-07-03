@@ -3,6 +3,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 import userReducer from "./feature/userSlice";
+import recipeReducer from "./feature/recipeSlice";
+import favoriteReducer from "./feature/favoriteSlice";
 
 const persistConfig = {
   key: "roots",
@@ -11,6 +13,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user: userReducer,
+  recipe: recipeReducer,
+  favorite: favoriteReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

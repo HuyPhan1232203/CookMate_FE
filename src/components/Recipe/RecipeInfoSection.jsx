@@ -21,7 +21,7 @@ const RecipeInfoSection = ({ recipe }) => {
       }}
     >
       <Typography.Title level={2} style={{ marginBottom: 12, fontSize: 32 }}>
-        {recipe.title}
+        {recipe.name}
       </Typography.Title>
       <p style={{ marginBottom: 18, fontSize: 17, color: "#444" }}>
         {recipe.description}

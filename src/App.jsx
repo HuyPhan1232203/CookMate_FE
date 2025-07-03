@@ -16,6 +16,7 @@ const LoginPage = lazy(() => import("@/auth/LoginPage"));
 const RegisterPage = lazy(() => import("@/auth/RegisterPage"));
 const ForgotPasswordPage = lazy(() => import("@/auth/ForgotPasswordPage"));
 const NotFoundPage = lazy(() => import("@pages/NotFoundPage"));
+const FavoritePage = lazy(() => import("@/pages/FavoritePage"));
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
                   <Route path="recipes" element={<RecipePage />} />
                   <Route path="recipes/:id" element={<RecipeDetail />} />
                   <Route path="users/:id" element={<ProfilePage />} />
+                  <Route path="favorites" element={<FavoritePage />} />
                 </Route>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />

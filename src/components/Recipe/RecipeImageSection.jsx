@@ -1,5 +1,5 @@
 import React from "react";
-
+import defaultImage from "@/assets/images/image_detail.jpg";
 const RecipeImageSection = ({ title, image }) => {
   return (
     <div
@@ -19,7 +19,7 @@ const RecipeImageSection = ({ title, image }) => {
     >
       <img
         alt={title}
-        src={image}
+        src={image || defaultImage}
         style={{
           width: "95%",
           maxWidth: 480,

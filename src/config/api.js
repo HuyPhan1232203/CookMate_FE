@@ -22,7 +22,8 @@ export const endpoints = {
   },
   ai: {
     generateRecipes: `${API_BASE_URL}/ai/recipes/generate`,
-    cookingSteps: (recipeId) => `${API_BASE_URL}/ai/recipes/${recipeId}/cooking-steps`,
+    cookingSteps: (recipeId) =>
+      `${API_BASE_URL}/ai/recipes/${recipeId}/cooking-steps`,
   },
   // Add more endpoints as needed
 };

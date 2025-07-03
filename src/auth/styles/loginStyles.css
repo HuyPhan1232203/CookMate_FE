@@ -1,0 +1,222 @@
+/* Animation classes */
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-delay-1 {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.animate-delay-2 {
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 3D Floating Animations */
+.float-animation-1 {
+  animation: float3d-1 6s ease-in-out infinite;
+}
+.float-animation-2 {
+  animation: float3d-2 5s ease-in-out infinite;
+}
+.float-animation-3 {
+  animation: float3d-3 7s ease-in-out infinite;
+}
+.float-animation-4 {
+  animation: float3d-4 5.5s ease-in-out infinite;
+}
+.float-animation-5 {
+  animation: float3d-5 6.5s ease-in-out infinite;
+}
+.float-animation-6 {
+  animation: float3d-6 4.5s ease-in-out infinite;
+}
+.float-animation-7 {
+  animation: float3d-7 7.5s ease-in-out infinite;
+}
+.float-animation-8 {
+  animation: float3d-8 5.8s ease-in-out infinite;
+}
+.float-animation-9 {
+  animation: float3d-9 6.2s ease-in-out infinite;
+}
+.float-animation-10 {
+  animation: float3d-10 4.8s ease-in-out infinite;
+}
+
+@keyframes float3d-1 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(-15deg) scale(1);
+  }
+  25% {
+    transform: translateY(-15px) translateX(5px) rotate(-10deg) scale(1.05);
+  }
+  50% {
+    transform: translateY(-25px) translateX(0px) rotate(-20deg) scale(1.1);
+  }
+  75% {
+    transform: translateY(-10px) translateX(-5px) rotate(-15deg) scale(1.05);
+  }
+}
+
+@keyframes float3d-2 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(20deg) scale(1);
+  }
+  33% {
+    transform: translateY(-20px) translateX(-8px) rotate(25deg) scale(1.08);
+  }
+  66% {
+    transform: translateY(-30px) translateX(5px) rotate(15deg) scale(1.15);
+  }
+}
+
+@keyframes float3d-3 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(-30deg) scale(1);
+  }
+  50% {
+    transform: translateY(-18px) translateX(10px) rotate(-35deg) scale(1.12);
+  }
+}
+
+@keyframes float3d-4 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(45deg) scale(1);
+  }
+  40% {
+    transform: translateY(-22px) translateX(-6px) rotate(50deg) scale(1.08);
+  }
+  80% {
+    transform: translateY(-12px) translateX(8px) rotate(40deg) scale(1.05);
+  }
+}
+
+@keyframes float3d-5 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(-10deg) scale(1);
+  }
+  30% {
+    transform: translateY(-16px) translateX(4px) rotate(-5deg) scale(1.06);
+  }
+  70% {
+    transform: translateY(-24px) translateX(-3px) rotate(-15deg) scale(1.1);
+  }
+}
+
+@keyframes float3d-6 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(25deg) scale(1);
+  }
+  50% {
+    transform: translateY(-14px) translateX(7px) rotate(30deg) scale(1.09);
+  }
+}
+
+@keyframes float3d-7 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(-45deg) scale(1);
+  }
+  25% {
+    transform: translateY(-12px) translateX(-4px) rotate(-50deg) scale(1.04);
+  }
+  75% {
+    transform: translateY(-20px) translateX(6px) rotate(-40deg) scale(1.08);
+  }
+}
+
+@keyframes float3d-8 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(15deg) scale(1);
+  }
+  35% {
+    transform: translateY(-19px) translateX(-5px) rotate(20deg) scale(1.07);
+  }
+  65% {
+    transform: translateY(-26px) translateX(8px) rotate(10deg) scale(1.11);
+  }
+}
+
+@keyframes float3d-9 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(-20deg) scale(1);
+  }
+  45% {
+    transform: translateY(-17px) translateX(9px) rotate(-25deg) scale(1.06);
+  }
+}
+
+@keyframes float3d-10 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(60deg) scale(1);
+  }
+  33% {
+    transform: translateY(-21px) translateX(-7px) rotate(65deg) scale(1.09);
+  }
+  67% {
+    transform: translateY(-13px) translateX(4px) rotate(55deg) scale(1.05);
+  }
+}
+
+/* Hover effects */
+.ant-btn:not(.ant-btn-primary):hover {
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+.ant-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4) !important;
+}
+
+/* Input focus effects */
+.ant-input:focus,
+.ant-input-focused {
+  border-color: #ff6b35 !important;
+  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2) !important;
+}
+
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused {
+  border-color: #ff6b35 !important;
+  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2) !important;
+}
+
+/* Checkbox hover */
+.ant-checkbox-wrapper:hover .ant-checkbox-inner {
+  border-color: #ff6b35 !important;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #ff6b35 !important;
+  border-color: #ff6b35 !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 576px) {
+  .ant-card {
+    margin: 0 16px;
+  }
+}

@@ -1,34 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Button, 
-  Drawer,
-  Tabs,
-  Space, 
-  Avatar,
-  Badge
-} from 'antd';
-import { 
-  MessageOutlined, 
-  RobotOutlined, 
+import React, { useState, useEffect } from "react";
+import { Button, Drawer, Tabs, Space, Avatar, Badge } from "antd";
+import {
+  MessageOutlined,
+  RobotOutlined,
   HistoryOutlined,
-  CommentOutlined
-} from '@ant-design/icons';
-import ChatInterface from '@components/ChatBot/ChatInterface';
-import ChatHistory from '@components/ChatBot/ChatHistory';
-import { 
-  getBotResponse, 
-  generateChatTitle, 
-  getWelcomeMessage, 
-  STORAGE_KEYS, 
-  CHAT_HISTORY_LIMIT 
-} from '@components/ChatBot/chatBotUtils';
-
+  CommentOutlined,
+} from "@ant-design/icons";
+import ChatInterface from "@components/ChatBot/ChatInterface";
+import ChatHistory from "@components/ChatBot/ChatHistory";
+import {
+  generateChatTitle,
+  getWelcomeMessage,
+  STORAGE_KEYS,
+  CHAT_HISTORY_LIMIT,
+} from "@components/ChatBot/chatBotUtils";
+import { callGeminiAI } from "@components/ChatBot/geminiApi";
+//AIzaSyB5e28smzbIbITHtguEzMWvjH4SKCcsiZs
 const ChatBotPage = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('chat');
+  const [activeTab, setActiveTab] = useState("chat");
   const [currentChatId, setCurrentChatId] = useState(null);
   const [messages, setMessages] = useState([getWelcomeMessage()]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
 
@@ -54,37 +47,45 @@ const ChatBotPage = () => {
       title: chatTitle,
       messages: messages,
       lastUpdated: new Date(),
-      messageCount: messages.length
+      messageCount: messages.length,
     };
 
-    const updatedHistory = chatHistory.filter(chat => chat.id !== currentChatId);
+    const updatedHistory = chatHistory.filter(
+      (chat) => chat.id !== currentChatId
+    );
     updatedHistory.unshift(chatSession);
-    
+
     // Keep only last 10 conversations
     const limitedHistory = updatedHistory.slice(0, CHAT_HISTORY_LIMIT);
-    
+
     setChatHistory(limitedHistory);
-    localStorage.setItem(STORAGE_KEYS.CHAT_HISTORY, JSON.stringify(limitedHistory));
+    localStorage.setItem(
+      STORAGE_KEYS.CHAT_HISTORY,
+      JSON.stringify(limitedHistory)
+    );
   };
 
   const startNewChat = () => {
     setCurrentChatId(Date.now());
     setMessages([getWelcomeMessage()]);
-    setActiveTab('chat');
-    setInputValue('');
+    setActiveTab("chat");
+    setInputValue("");
   };
 
   const loadChatFromHistory = (chatSession) => {
     setCurrentChatId(chatSession.id);
     setMessages(chatSession.messages);
-    setActiveTab('chat');
+    setActiveTab("chat");
   };
 
   const deleteChatFromHistory = (chatId) => {
-    const updatedHistory = chatHistory.filter(chat => chat.id !== chatId);
+    const updatedHistory = chatHistory.filter((chat) => chat.id !== chatId);
     setChatHistory(updatedHistory);
-    localStorage.setItem(STORAGE_KEYS.CHAT_HISTORY, JSON.stringify(updatedHistory));
-    
+    localStorage.setItem(
+      STORAGE_KEYS.CHAT_HISTORY,
+      JSON.stringify(updatedHistory)
+    );
+
     if (currentChatId === chatId) {
       startNewChat();
     }
@@ -108,27 +109,25 @@ const ChatBotPage = () => {
       id: Date.now(),
       text: inputValue,
       isBot: false,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     const currentInput = inputValue;
-    setInputValue('');
+    setInputValue("");
     setIsTyping(true);
 
-    // Simulate bot thinking time
-    setTimeout(() => {
-      const botResponse = getBotResponse(currentInput);
-      const botMessage = {
-        id: Date.now() + 1,
-        text: botResponse,
-        isBot: true,
-        timestamp: new Date()
-      };
+    // Gọi Gemini AI API thay cho getBotResponse
+    const botResponse = await callGeminiAI(currentInput);
+    const botMessage = {
+      id: Date.now() + 1,
+      text: botResponse,
+      isBot: true,
+      timestamp: new Date(),
+    };
 
-      setMessages(prev => [...prev, botMessage]);
-      setIsTyping(false);
-    }, 1000);
+    setMessages((prev) => [...prev, botMessage]);
+    setIsTyping(false);
   };
 
   return (
@@ -141,15 +140,15 @@ const ChatBotPage = () => {
         icon={<MessageOutlined />}
         onClick={() => setIsOpen(true)}
         style={{
-          position: 'fixed',
-          bottom: '24px',
-          right: '24px',
-          width: '56px',
-          height: '56px',
-          backgroundColor: '#ff6b35',
-          borderColor: '#ff6b35',
+          position: "fixed",
+          bottom: "24px",
+          right: "24px",
+          width: "56px",
+          height: "56px",
+          backgroundColor: "#ff6b35",
+          borderColor: "#ff6b35",
           zIndex: 1000,
-          boxShadow: '0 4px 12px rgba(255, 107, 53, 0.4)',
+          boxShadow: "0 4px 12px rgba(255, 107, 53, 0.4)",
         }}
       />
 
@@ -157,7 +156,10 @@ const ChatBotPage = () => {
       <Drawer
         title={
           <Space>
-            <Avatar icon={<RobotOutlined />} style={{ backgroundColor: '#ff6b35' }} />
+            <Avatar
+              icon={<RobotOutlined />}
+              style={{ backgroundColor: "#ff6b35" }}
+            />
             <span>CookBot - Trợ lý nấu ăn</span>
           </Space>
         }
@@ -167,11 +169,11 @@ const ChatBotPage = () => {
         width={450}
         extra={
           <Space>
-            <Button 
-              type="text" 
-              size="small" 
+            <Button
+              type="text"
+              size="small"
               onClick={startNewChat}
-              style={{ color: '#666' }}
+              style={{ color: "#666" }}
             >
               Chat mới
             </Button>
@@ -183,7 +185,7 @@ const ChatBotPage = () => {
           onChange={setActiveTab}
           items={[
             {
-              key: 'chat',
+              key: "chat",
               label: (
                 <span>
                   <CommentOutlined />
@@ -198,10 +200,10 @@ const ChatBotPage = () => {
                   onSendMessage={handleSendMessage}
                   isTyping={isTyping}
                 />
-              )
+              ),
             },
             {
-              key: 'history',
+              key: "history",
               label: (
                 <span>
                   <HistoryOutlined />
@@ -216,8 +218,8 @@ const ChatBotPage = () => {
                   onClearAllHistory={clearAllHistory}
                   onStartNewChat={startNewChat}
                 />
-              )
-            }
+              ),
+            },
           ]}
         />
       </Drawer>
@@ -225,4 +227,4 @@ const ChatBotPage = () => {
   );
 };
 
-export default ChatBotPage; 
+export default ChatBotPage;

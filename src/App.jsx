@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import MainLayout from "@layouts/MainLayout";
-
 import { persistor, store } from "@redux/store";
 import { ProfilePage } from "./pages/ProfilePage";
 
@@ -17,6 +16,7 @@ const RegisterPage = lazy(() => import("@/auth/RegisterPage"));
 const ForgotPasswordPage = lazy(() => import("@/auth/ForgotPasswordPage"));
 const NotFoundPage = lazy(() => import("@pages/NotFoundPage"));
 const FavoritePage = lazy(() => import("@/pages/FavoritePage"));
+const Dashboard = lazy(() => import("@/pages/Dashboard"));
 
 export default function App() {
   return (
@@ -32,6 +32,7 @@ export default function App() {
                   <Route path="recipes/:id" element={<RecipeDetail />} />
                   <Route path="users/:id" element={<ProfilePage />} />
                   <Route path="favorites" element={<FavoritePage />} />
+                  <Route path="dashboard" element={<Dashboard />} />
                 </Route>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />

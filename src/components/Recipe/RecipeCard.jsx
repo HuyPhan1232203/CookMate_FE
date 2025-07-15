@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "antd";
+import { Card, Modal } from "antd";
 import { useNavigate } from "react-router-dom";
 import AppButton from "@ultils/AppButton";
 import defaultImage from "@/assets/images/image_food.jpg";
@@ -12,8 +12,26 @@ const RecipeCard = ({ recipe }) => {
   const favorites = useSelector((state) => state.favorite.favorites);
   const isFavorite = favorites.some((item) => item.id === recipe.id);
 
+  // Lấy role từ localStorage
+  let role = "guest";
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.role) role = user.role;
+  } catch {
+    /* ignore */
+  }
+
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
+    if (role === "guest") {
+      Modal.info({
+        title: "Notice",
+        content: "You need to log in to use this feature!",
+        okText: "Log in",
+        onOk: () => navigate("/login"),
+      });
+      return;
+    }
     if (isFavorite) {
       dispatch(removeFavorite(recipe.id));
     } else {
@@ -52,23 +70,26 @@ const RecipeCard = ({ recipe }) => {
       }}
       bodyStyle={{ padding: 16, minHeight: 120 }}
     >
-      <div style={{ position: "absolute", top: 12, right: 18, zIndex: 2 }}>
-        <button
-          onClick={handleFavoriteClick}
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            outline: "none",
-            fontSize: 26,
-            color: isFavorite ? "#ff4d4f" : "#bbb",
-            transition: "color 0.2s",
-          }}
-          aria-label={isFavorite ? "Bỏ yêu thích" : "Thêm vào yêu thích"}
-        >
-          {isFavorite ? "❤️" : "🤍"}
-        </button>
-      </div>
+      {/* Chỉ hiện nút favorite nếu không phải guest */}
+      {role !== "guest" && (
+        <div style={{ position: "absolute", top: 12, right: 18, zIndex: 2 }}>
+          <button
+            onClick={handleFavoriteClick}
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              outline: "none",
+              fontSize: 26,
+              color: isFavorite ? "#ff4d4f" : "#bbb",
+              transition: "color 0.2s",
+            }}
+            aria-label={isFavorite ? "Remove from favorite" : "Add to favorite"}
+          >
+            {isFavorite ? "❤️" : "🤍"}
+          </button>
+        </div>
+      )}
       <div style={{ minHeight: 90, marginBottom: 8 }}>
         <div
           style={{

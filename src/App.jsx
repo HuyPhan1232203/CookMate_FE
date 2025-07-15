@@ -6,6 +6,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import MainLayout from "@layouts/MainLayout";
 import { persistor, store } from "@redux/store";
 import { ProfilePage } from "./pages/ProfilePage";
+import ProtectedRoute from "@components/ProtectedRoute";
+import AccessDeniedPage from "@/pages/AccessDeniedPage";
 
 // Lazy Load
 const HomePage = lazy(() => import("@/pages/HomePage"));
@@ -28,18 +30,72 @@ export default function App() {
               <Routes>
                 <Route path="/" element={<MainLayout />}>
                   <Route index element={<HomePage />} />
-                  <Route path="recipes" element={<RecipePage />} />
-                  <Route path="recipes/:id" element={<RecipeDetail />} />
-                  <Route path="users/:id" element={<ProfilePage />} />
-                  <Route path="favorites" element={<FavoritePage />} />
-                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route
+                    path="recipes"
+                    element={
+                      <ProtectedRoute allowedRoles={["user", "admin", "guest"]}>
+                        <RecipePage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="recipes/:id"
+                    element={
+                      <ProtectedRoute allowedRoles={["user", "admin"]}>
+                        <RecipeDetail />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="users/:id"
+                    element={
+                      <ProtectedRoute allowedRoles={["user", "admin"]}>
+                        <ProfilePage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="favorites"
+                    element={
+                      <ProtectedRoute allowedRoles={["user", "admin"]}>
+                        <FavoritePage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="dashboard"
+                    element={
+                      <ProtectedRoute allowedRoles={["admin"]}>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
                 </Route>
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
+                <Route
+                  path="/login"
+                  element={
+                    <ProtectedRoute allowedRoles={["guest"]}>
+                      <LoginPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/register"
+                  element={
+                    <ProtectedRoute allowedRoles={["guest"]}>
+                      <RegisterPage />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route
                   path="/forgot-password"
-                  element={<ForgotPasswordPage />}
+                  element={
+                    <ProtectedRoute allowedRoles={["guest"]}>
+                      <ForgotPasswordPage />
+                    </ProtectedRoute>
+                  }
                 />
+                <Route path="/access-denied" element={<AccessDeniedPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </Suspense>

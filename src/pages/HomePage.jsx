@@ -45,7 +45,7 @@ const HomePage = () => {
       {/* RecipeShowcase - Inline */}
       <RecipesShowcase />
       {/* TestimonialsSection - Inline */}
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
       {/* CallToActionSection - Inline */}
       <CallToActionSection handleEmailSubmit={handleEmailSubmit} form={form} />
 

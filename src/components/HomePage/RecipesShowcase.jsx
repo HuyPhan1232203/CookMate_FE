@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Row,
   Col,
@@ -9,6 +9,7 @@ import {
   Space,
   Rate,
   Divider,
+  Modal,
 } from "antd";
 import {
   ClockCircleOutlined,
@@ -18,109 +19,50 @@ import {
   StarFilled,
 } from "@ant-design/icons";
 import { RECIPES } from "@/constants/HomePage/RecipeShowcase";
-
+import { Link, useNavigate } from "react-router-dom";
+import api from "@/config/axios";
 const { Title, Paragraph, Text } = Typography;
 
 const RecipesShowcase = () => {
-  // Mock data for featured recipes
-  const featuredRecipes = [
-    {
-      id: 1,
-      title: "Phở Bò Hà Nội",
-      image: "🍜",
-      cookTime: "2 giờ",
-      difficulty: "HARD",
-      calories: 450,
-      rating: 4.8,
-      ratingCount: 156,
-      author: "Chef Minh",
-      authorAvatar: "https://via.placeholder.com/50",
-      description:
-        "Món phở truyền thống với nước dùng đậm đà, thịt bò tươi ngon và bánh phở mềm mại.",
-      isFeatured: true,
-      tags: ["Truyền thống", "Món chính", "Bò"],
-    },
-    {
-      id: 2,
-      title: "Gà Teriyaki Nhật Bản",
-      image: "🍗",
-      cookTime: "45 phút",
-      difficulty: "MEDIUM",
-      calories: 380,
-      rating: 4.6,
-      ratingCount: 89,
-      author: "Chef Hana",
-      authorAvatar: "https://via.placeholder.com/50",
-      description:
-        "Gà nướng teriyaki với vị ngọt đậm đà, thơm lừng và hấp dẫn không thể chối từ.",
-      isFeatured: false,
-      tags: ["Nhật Bản", "Nướng", "Gà"],
-    },
-    {
-      id: 3,
-      title: "Cơm Âm Phủ",
-      image: "🍚",
-      cookTime: "1 giờ",
-      difficulty: "MEDIUM",
-      calories: 520,
-      rating: 4.7,
-      ratingCount: 124,
-      author: "Chef Lan",
-      authorAvatar: "https://via.placeholder.com/50",
-      description:
-        "Món cơm đặc biệt với nhiều loại nguyên liệu bổ dưỡng, đẹp mắt và ngon miệng.",
-      isFeatured: true,
-      tags: ["Sáng tạo", "Cơm", "Dinh dưỡng"],
-    },
-    {
-      id: 4,
-      title: "Bánh Mì Thịt Nướng",
-      image: "🥖",
-      cookTime: "30 phút",
-      difficulty: "EASY",
-      calories: 320,
-      rating: 4.5,
-      ratingCount: 203,
-      author: "Chef Đức",
-      authorAvatar: "https://via.placeholder.com/50",
-      description:
-        "Bánh mì giòn tan với thịt nướng thơm phức, rau củ tươi mát và nước sốt đặc biệt.",
-      isFeatured: false,
-      tags: ["Đường phố", "Nhanh", "Thịt nướng"],
-    },
-    {
-      id: 5,
-      title: "Lẩu Thái Chua Cay",
-      image: "🍲",
-      cookTime: "1.5 giờ",
-      difficulty: "MEDIUM",
-      calories: 280,
-      rating: 4.9,
-      ratingCount: 78,
-      author: "Chef Thai",
-      authorAvatar: "https://via.placeholder.com/50",
-      description:
-        "Lẩu Thái với vị chua cay đặc trưng, tôm tươi, nấm và rau củ đầy màu sắc.",
-      isFeatured: false,
-      tags: ["Thái Lan", "Lẩu", "Cay"],
-    },
-    {
-      id: 6,
-      title: "Chè Đậu Xanh",
-      image: "🍨",
-      cookTime: "1 giờ",
-      difficulty: "EASY",
-      calories: 220,
-      rating: 4.4,
-      ratingCount: 67,
-      author: "Chef Mai",
-      authorAvatar: "https://via.placeholder.com/50",
-      description:
-        "Món chè truyền thống với đậu xanh mềm ngọt, nước cốt dừa thơm béo.",
-      isFeatured: false,
-      tags: ["Tráng miệng", "Truyền thống", "Chè"],
-    },
-  ];
+  const [top6Recipes, setTop6Recipes] = useState([]);
+  const navigate = useNavigate();
+  // Lấy role từ localStorage
+  let role = "guest";
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.role) role = user.role;
+  } catch {
+    /* ignore */
+  }
+
+  const handleFavorite = () => {
+    if (role === "guest") {
+      Modal.info({
+        title: "Notice",
+        content: "You need to log in to use this feature!",
+        okText: "Log in",
+        onOk: () => navigate("/login"),
+      });
+      return;
+    }
+    // TODO: Handle favorite for user/admin here
+  };
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const res = await api.get("/recipes");
+        // Sort phía FE lấy 6 món rating cao nhất
+        const sorted = res.data.data
+          .sort((a, b) => b.rating - a.rating)
+          .slice(0, 6);
+        setTop6Recipes(sorted);
+      } catch {
+        setTop6Recipes([]);
+      }
+    };
+    fetchRecipes();
+  }, []);
 
   // Render difficulty badge
   const getDifficultyColor = (difficulty) => {
@@ -129,7 +71,6 @@ const RecipesShowcase = () => {
       MEDIUM: "#faad14",
       HARD: "#f5222d",
     };
-
     return colorMap[difficulty] || "#faad14";
   };
 
@@ -181,7 +122,7 @@ const RecipesShowcase = () => {
         </div>
 
         <Row gutter={[24, 24]}>
-          {featuredRecipes.map((recipe) => (
+          {top6Recipes.map((recipe) => (
             <Col xs={24} sm={12} lg={8} key={recipe.id}>
               <Card
                 hoverable
@@ -224,7 +165,7 @@ const RecipesShowcase = () => {
                       }}
                     >
                       <StarFilled style={{ color: "#ffd700" }} />
-                      {recipe.rating}
+                      {recipe.aiRating}
                     </div>
                     <div
                       style={{
@@ -249,9 +190,9 @@ const RecipesShowcase = () => {
                     level={4}
                     style={{ margin: 0, marginBottom: 8, color: "#333" }}
                   >
-                    {recipe.title}
+                    {recipe.name}
                   </Title>
-                  <Text
+                  {/* <Text
                     type="secondary"
                     style={{
                       fontSize: "13px",
@@ -260,7 +201,7 @@ const RecipesShowcase = () => {
                     }}
                   >
                     by {recipe.author}
-                  </Text>
+                  </Text> */}
                   <Paragraph
                     style={{
                       color: "#666",
@@ -274,15 +215,16 @@ const RecipesShowcase = () => {
 
                   <div style={{ marginBottom: 16 }}>
                     <Space wrap>
-                      {recipe.tags.map((tag) => (
-                        <Tag
-                          key={tag}
-                          color="orange"
-                          style={{ fontSize: "11px", padding: "2px 6px" }}
-                        >
-                          {tag}
-                        </Tag>
-                      ))}
+                      {recipe.tags &&
+                        recipe.tags.map((tag) => (
+                          <Tag
+                            key={tag}
+                            color="orange"
+                            style={{ fontSize: "11px", padding: "2px 6px" }}
+                          >
+                            {tag}
+                          </Tag>
+                        ))}
                     </Space>
                   </div>
 
@@ -298,20 +240,21 @@ const RecipesShowcase = () => {
                       <Space>
                         <ClockCircleOutlined style={{ color: "#666" }} />
                         <Text style={{ fontSize: "12px" }}>
-                          {recipe.cookTime}
+                          {recipe.cookingTime}
                         </Text>
                       </Space>
-                      <Space>
+                      {/* <Space>
                         <FireOutlined style={{ color: "#ff6b35" }} />
                         <Text style={{ fontSize: "12px" }}>
                           {recipe.calories}
                         </Text>
-                      </Space>
+                      </Space> */}
                       <Tag
                         color={getDifficultyColor(recipe.difficulty)}
                         style={{ margin: 0, fontSize: "11px" }}
                       >
-                        {RECIPES.DIFFICULTY[recipe.difficulty]}
+                        {/* {RECIPES.DIFFICULTY[recipe.difficulty]} */}
+                        {recipe.complexity}
                       </Tag>
                     </Space>
                   </div>
@@ -326,7 +269,8 @@ const RecipesShowcase = () => {
                     <div>
                       <Rate
                         disabled
-                        value={Math.floor(recipe.rating)}
+                        value={recipe.aiRating}
+                        allowHalf
                         style={{ fontSize: "14px" }}
                       />
                       <Text
@@ -336,7 +280,7 @@ const RecipesShowcase = () => {
                           marginLeft: 8,
                         }}
                       >
-                        ({recipe.ratingCount})
+                        ({recipe.aiRating})
                       </Text>
                     </div>
                     <Space>
@@ -344,6 +288,7 @@ const RecipesShowcase = () => {
                         type="text"
                         icon={<HeartOutlined />}
                         size="small"
+                        onClick={handleFavorite}
                       />
                       <Button
                         type="text"
@@ -359,22 +304,24 @@ const RecipesShowcase = () => {
         </Row>
 
         <div style={{ textAlign: "center", marginTop: 40 }}>
-          <Button
-            size="large"
-            style={{
-              padding: "0 32px",
-              height: "48px",
-              fontSize: "16px",
-              borderRadius: "24px",
-              background: "white",
-              border: "none",
-              color: "#ff6b35",
-              fontWeight: "bold",
-              boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
-            }}
-          >
-            {RECIPES.BUTTONS.VIEW_MORE}
-          </Button>
+          <Link to="/recipes">
+            <Button
+              size="large"
+              style={{
+                padding: "0 32px",
+                height: "48px",
+                fontSize: "16px",
+                borderRadius: "24px",
+                background: "white",
+                border: "none",
+                color: "#ff6b35",
+                fontWeight: "bold",
+                boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
+              }}
+            >
+              {RECIPES.BUTTONS.VIEW_MORE}
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

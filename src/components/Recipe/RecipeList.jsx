@@ -7,6 +7,7 @@ import RecipeListHeader from "./RecipeListHeader";
 import RecipeRow from "./RecipeRow";
 import { Skeleton, message } from "antd";
 import api from "@/config/axios";
+import { useNavigate } from "react-router-dom";
 
 // Hàm loại bỏ dấu tiếng Việt
 function removeVietnameseTones(str) {
@@ -25,6 +26,17 @@ const RecipeList = () => {
   const [loading, setLoading] = useState(true);
   const [searchValue, setSearchValue] = useState("");
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  // Lấy role từ localStorage
+  let role = "guest";
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.role) role = user.role;
+  } catch (e) {
+    /* ignore */
+  }
+  const isGuest = role === "guest";
 
   // Fetch API khi đổi trang hoặc search
   useEffect(() => {
@@ -58,10 +70,13 @@ const RecipeList = () => {
     )
   );
 
-  // Chia filteredRecipes thành từng hàng
+  // Giới hạn cho guest
+  const limitedRecipes = isGuest
+    ? filteredRecipes.slice(0, 8)
+    : filteredRecipes;
   const rows = [];
-  for (let i = 0; i < filteredRecipes.length; i += cardsPerRow) {
-    rows.push(filteredRecipes.slice(i, i + cardsPerRow));
+  for (let i = 0; i < limitedRecipes.length; i += cardsPerRow) {
+    rows.push(limitedRecipes.slice(i, i + cardsPerRow));
   }
 
   useEffect(() => {
@@ -166,15 +181,36 @@ const RecipeList = () => {
             {error}
           </div>
         ) : (
-          rows.map((row, rowIdx) => (
-            <RecipeRow
-              key={rowIdx}
-              row={row}
-              rowIdx={rowIdx}
-              rowRef={(el) => (rowRefs.current[rowIdx] = el)}
-              isLastRow={rowIdx === rows.length - 1}
-            />
-          ))
+          <>
+            {rows.map((row, rowIdx) => (
+              <RecipeRow
+                key={rowIdx}
+                row={row}
+                rowIdx={rowIdx}
+                rowRef={(el) => (rowRefs.current[rowIdx] = el)}
+                isLastRow={rowIdx === rows.length - 1}
+              />
+            ))}
+            {/* Nếu là guest và có nhiều hơn 10 món thì hiện nút đăng nhập */}
+            {isGuest && filteredRecipes.length > 10 && (
+              <div style={{ textAlign: "center", margin: 32 }}>
+                <button
+                  style={{
+                    background: "#ff6b35",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 8,
+                    padding: "10px 24px",
+                    fontSize: 16,
+                    cursor: "pointer",
+                  }}
+                  onClick={() => navigate("/login")}
+                >
+                  Login to see more recipes
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
       <style>{`

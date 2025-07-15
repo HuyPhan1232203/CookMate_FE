@@ -217,7 +217,7 @@ const CallToActionSection = ({ handleEmailSubmit, form }) => {
                   </Col>
                   <Col span={8}>
                     <div style={{ textAlign: "center" }}>
-                      <Title level={3} style={{ color: "#4caf50", margin: 0 }}>
+                      <Title level={3} style={{ color: "#ffeb3b", margin: 0 }}>
                         {CTA.STATS.RECIPES.NUMBER}
                       </Title>
                       <Text
@@ -232,7 +232,7 @@ const CallToActionSection = ({ handleEmailSubmit, form }) => {
                   </Col>
                   <Col span={8}>
                     <div style={{ textAlign: "center" }}>
-                      <Title level={3} style={{ color: "#ff9800", margin: 0 }}>
+                      <Title level={3} style={{ color: "#ffeb3b", margin: 0 }}>
                         {CTA.STATS.RATING.NUMBER}
                       </Title>
                       <Text

@@ -15,7 +15,7 @@ import {
   CHAT_HISTORY_LIMIT,
 } from "@components/ChatBot/chatBotUtils";
 import { callGeminiAI } from "@components/ChatBot/geminiApi";
-//AIzaSyB5e28smzbIbITHtguEzMWvjH4SKCcsiZs
+
 const ChatBotPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("chat");

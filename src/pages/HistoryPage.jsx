@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import HistoryRecipeCard from "@/components/Recipe/HistoryRecipeCard";
 import RecipeListHeader from "@/components/Recipe/RecipeListHeader";
-import RecipeRow from "@/components/Recipe/RecipeRow";
+import { useNavigate } from "react-router-dom";
 
 // Hàm loại bỏ dấu tiếng Việt
 function removeVietnameseTones(str) {
@@ -13,8 +13,7 @@ function removeVietnameseTones(str) {
     .replace(/Đ/g, "D");
 }
 
-const FavoritePage = () => {
-  // Lấy userId từ localStorage
+const HistoryPage = () => {
   let userId = null;
   try {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -22,38 +21,25 @@ const FavoritePage = () => {
   } catch (e) {
     console.log(e);
   }
-  // Lấy favorites đúng theo userId
-  const favorites = useSelector((state) =>
-    userId ? state.favorite.favorites[userId] || [] : []
+  const history = useSelector((state) =>
+    userId ? state.history.history[userId] || [] : []
   );
-  const cardsPerRow = 4;
-  const rowRefs = useRef([]);
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
 
   // Lọc danh sách theo search
-  const filteredFavorites = favorites.filter((r) =>
+  const filteredHistory = history.filter((r) =>
     removeVietnameseTones((r.name || r.title || "").toLowerCase()).includes(
       removeVietnameseTones(searchValue.toLowerCase())
     )
   );
 
-  // Chia filteredFavorites thành từng hàng (không dùng state)
+  const cardsPerRow = 4;
+  // Chia filteredHistory thành từng hàng (không dùng state)
   const rows = [];
-  for (let i = 0; i < filteredFavorites.length; i += cardsPerRow) {
-    rows.push(filteredFavorites.slice(i, i + cardsPerRow));
+  for (let i = 0; i < filteredHistory.length; i += cardsPerRow) {
+    rows.push(filteredHistory.slice(i, i + cardsPerRow));
   }
-
-  useEffect(() => {
-    if (!rowRefs.current) return;
-    rowRefs.current.forEach((row, idx) => {
-      if (row && !row.classList.contains("recipe-row-animate-show")) {
-        setTimeout(() => {
-          row.classList.add("recipe-row-animate-show");
-        }, idx * 250);
-      }
-    });
-  }, [rows.length]);
 
   return (
     <div
@@ -65,7 +51,6 @@ const FavoritePage = () => {
         overflow: "hidden",
       }}
     >
-      {/* Nền gradient giống các trang khác */}
       <div
         style={{
           position: "absolute",
@@ -111,12 +96,12 @@ const FavoritePage = () => {
         }}
       >
         <RecipeListHeader
-          title="Công thức yêu thích"
+          title="Lịch sử xem công thức"
           searchValue={searchValue}
           onSearch={setSearchValue}
           onBack={() => navigate("/recipes")}
         />
-        {filteredFavorites.length === 0 ? (
+        {filteredHistory.length === 0 ? (
           <div
             style={{
               color: "#888",
@@ -128,19 +113,22 @@ const FavoritePage = () => {
             Không tìm thấy công thức nào phù hợp.
           </div>
         ) : (
-          rows.map((row, rowIdx) => (
-            <RecipeRow
-              key={rowIdx}
-              row={row}
-              rowIdx={rowIdx}
-              rowRef={(el) => (rowRefs.current[rowIdx] = el)}
-              isLastRow={rowIdx === rows.length - 1}
-            />
-          ))
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 30,
+              justifyContent: "center",
+            }}
+          >
+            {filteredHistory.map((recipe) => (
+              <HistoryRecipeCard key={recipe.id} recipe={recipe} />
+            ))}
+          </div>
         )}
       </div>
     </div>
   );
 };
 
-export default FavoritePage;
+export default HistoryPage;

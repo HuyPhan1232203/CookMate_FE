@@ -6,11 +6,13 @@ import NotFoundPage from "@/pages/NotFoundPage";
 import RecipeImageSection from "./RecipeImageSection";
 import RecipeInfoSection from "./RecipeInfoSection";
 import api from "@/config/axios";
-
+import { useDispatch } from "react-redux";
+import { addHistory } from "@redux/feature/historySlice";
 const RecipeDetail = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchAllRecipes = async () => {
@@ -28,6 +30,20 @@ const RecipeDetail = () => {
     };
     fetchAllRecipes();
   }, [id]);
+
+  // Lưu vào history khi user đã đăng nhập và recipe tồn tại
+  useEffect(() => {
+    let userId = null;
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      userId = user?.id || user?.userId;
+    } catch (e) {
+      console.log(e);
+    }
+    if (userId && recipe) {
+      dispatch(addHistory({ userId, recipe }));
+    }
+  }, [recipe, dispatch]);
 
   if (loading)
     return (

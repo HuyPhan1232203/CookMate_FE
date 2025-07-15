@@ -3,6 +3,7 @@ import {
   HeartOutlined,
   MenuOutlined,
   SearchOutlined,
+  HistoryOutlined,
 } from "@ant-design/icons";
 import { APP_CONTENT } from "@constants/content";
 import { Button, Layout, Typography } from "antd";
@@ -18,6 +19,29 @@ const { Header: AntHeader } = Layout;
 const Header = () => {
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
   const location = useLocation();
+  const currentPath = location.pathname;
+  const isActive = (path) => currentPath.startsWith(path);
+
+  const menuItemBase = {
+    color: "#222",
+    fontWeight: 600,
+    fontSize: 16,
+    textDecoration: "none",
+    display: "flex",
+    alignItems: "center",
+    padding: "0 12px",
+    height: 64,
+    position: "relative",
+    transition: "color 0.25s cubic-bezier(.4,2,.6,1)",
+    borderBottom: "2.5px solid transparent",
+    background: "none",
+    cursor: "pointer",
+    outline: "none",
+  };
+  const menuItemActive = {
+    color: "#ff6b35",
+    background: "none",
+  };
 
   const getSelectedKey = () => {
     if (location.pathname.startsWith("/favorites")) return "favorites";
@@ -40,10 +64,15 @@ const Header = () => {
       ),
     },
     {
-      key: "search",
-      icon: <SearchOutlined />,
-      label: APP_CONTENT.HEADER.MENU_ITEMS.SEARCH,
+      key: "history",
+      icon: <HistoryOutlined />,
+      label: <Link to="/history">History</Link>,
     },
+    // {
+    //   key: "search",
+    //   icon: <SearchOutlined />,
+    //   label: APP_CONTENT.HEADER.MENU_ITEMS.SEARCH,
+    // },
   ];
 
   return (
@@ -69,26 +98,123 @@ const Header = () => {
         }}
       >
         <HeaderLogo />
+        {/* Giữa: Menu */}
         <div
           style={{
+            flex: "1 1 0",
             display: "flex",
-            alignItems: "center",
-            marginLeft: "auto",
-            gap: 24,
+            justifyContent: "flex-end",
+            minWidth: 0,
+            marginRight: 32,
           }}
         >
-          <div
-            className="desktop-menu"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <HeaderMenu menuItems={menuItems} selectedKey={getSelectedKey()} />
+          <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
+            <Link
+              to="/recipes"
+              style={{
+                ...menuItemBase,
+                ...(isActive("/recipes") && menuItemActive),
+              }}
+            >
+              <BookOutlined
+                style={{
+                  marginRight: 6,
+                  transition: "color 0.25s cubic-bezier(.4,2,.6,1)",
+                }}
+              />
+              Recipes
+              {isActive("/recipes") && (
+                <span
+                  style={{
+                    position: "absolute",
+                    left: 12,
+                    right: 12,
+                    bottom: 6,
+                    height: 3,
+                    borderRadius: 2,
+                    background:
+                      "linear-gradient(90deg,#ff9a44 0%,#ff6b35 100%)",
+                    boxShadow: "0 2px 8px #ff6b3533",
+                    transition: "all 0.35s cubic-bezier(.4,2,.6,1)",
+                    transformOrigin: "center",
+                    animation: "underlineMove 0.5s cubic-bezier(.4,2,.6,1)",
+                  }}
+                />
+              )}
+            </Link>
+            <Link
+              to="/favorites"
+              style={{
+                ...menuItemBase,
+                ...(isActive("/favorites") && menuItemActive),
+              }}
+            >
+              <HeartOutlined
+                style={{
+                  marginRight: 6,
+                  transition: "color 0.25s cubic-bezier(.4,2,.6,1)",
+                }}
+              />
+              Favorites
+              {isActive("/favorites") && (
+                <span
+                  style={{
+                    position: "absolute",
+                    left: 12,
+                    right: 12,
+                    bottom: 6,
+                    height: 3,
+                    borderRadius: 2,
+                    background:
+                      "linear-gradient(90deg,#ff9a44 0%,#ff6b35 100%)",
+                    boxShadow: "0 2px 8px #ff6b3533",
+                    transition: "all 0.35s cubic-bezier(.4,2,.6,1)",
+                    transformOrigin: "center",
+                    animation: "underlineMove 0.5s cubic-bezier(.4,2,.6,1)",
+                  }}
+                />
+              )}
+            </Link>
+            <Link
+              to="/history"
+              style={{
+                ...menuItemBase,
+                ...(isActive("/history") && menuItemActive),
+              }}
+            >
+              <HistoryOutlined
+                style={{
+                  marginRight: 6,
+                  transition: "color 0.25s cubic-bezier(.4,2,.6,1)",
+                }}
+              />
+              History
+              {isActive("/history") && (
+                <span
+                  style={{
+                    position: "absolute",
+                    left: 12,
+                    right: 12,
+                    bottom: 6,
+                    height: 3,
+                    borderRadius: 2,
+                    background:
+                      "linear-gradient(90deg,#ff9a44 0%,#ff6b35 100%)",
+                    boxShadow: "0 2px 8px #ff6b3533",
+                    transition: "all 0.35s cubic-bezier(.4,2,.6,1)",
+                    transformOrigin: "center",
+                    animation: "underlineMove 0.5s cubic-bezier(.4,2,.6,1)",
+                  }}
+                />
+              )}
+            </Link>
           </div>
-          <div
-            className="desktop-auth"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <HeaderAuthButtons />
-          </div>
+        </div>
+        <div
+          className="desktop-auth"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <HeaderAuthButtons />
         </div>
         <Button
           className="mobile-menu-btn"
@@ -143,6 +269,12 @@ const Header = () => {
         /* Menu item icon color on hover */
         .ant-menu-horizontal > .ant-menu-item:hover .anticon {
           color: #ff6b35 !important;
+        }
+
+        @keyframes underlineMove {
+          0% { transform: scaleX(0.2); opacity: 0.5; }
+          60% { transform: scaleX(1.1); opacity: 1; }
+          100% { transform: scaleX(1); opacity: 1; }
         }
       `}</style>
     </AntHeader>

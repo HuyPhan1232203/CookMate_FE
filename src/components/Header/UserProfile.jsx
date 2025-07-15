@@ -9,11 +9,14 @@ import {
   DownOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearUser } from "@redux/feature/userSlice";
 
 const { Text } = Typography;
 
 const UserProfile = ({ user }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
 
   const handleLogout = () => {
@@ -21,7 +24,8 @@ const UserProfile = ({ user }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("isAuthenticated");
-
+    // Cập nhật Redux state
+    dispatch(clearUser());
     message.success("Đăng xuất thành công!");
     navigate("/");
 

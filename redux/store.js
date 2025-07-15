@@ -5,6 +5,7 @@ import { combineReducers } from "redux";
 import userReducer from "./feature/userSlice";
 import recipeReducer from "./feature/recipeSlice";
 import favoriteReducer from "./feature/favoriteSlice";
+import historyReducer from "./feature/historySlice";
 
 const persistConfig = {
   key: "roots",
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   recipe: recipeReducer,
   favorite: favoriteReducer,
+  history: historyReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -6,7 +6,7 @@ import defaultImage from "@/assets/images/image_food.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavorite, removeFavorite } from "@redux/feature/favoriteSlice";
 
-const RecipeCard = ({ recipe }) => {
+const RecipeCard = ({ recipe, hideFavorite = false }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // Lấy userId từ localStorage (ưu tiên user.id, nếu không có thì user.userId)
@@ -74,8 +74,8 @@ const RecipeCard = ({ recipe }) => {
       }}
       bodyStyle={{ padding: 16, minHeight: 120 }}
     >
-      {/* Chỉ hiện nút favorite nếu không phải guest */}
-      {role !== "guest" && (
+      {/* Chỉ hiện nút favorite nếu không phải guest và không ẩn */}
+      {!hideFavorite && role !== "guest" && (
         <div style={{ position: "absolute", top: 12, right: 18, zIndex: 2 }}>
           <button
             onClick={handleFavoriteClick}

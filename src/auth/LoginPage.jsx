@@ -9,11 +9,14 @@ import LoginLayout from "./components/LoginLayout";
 
 import { endpoints } from "@/config/api";
 import api from "@/config/axios";
+import { useDispatch } from "react-redux";
+import { setUser } from "@redux/feature/userSlice";
 
 const LoginPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (values) => {
     try {
@@ -34,6 +37,8 @@ const LoginPage = () => {
         localStorage.setItem("userId", response.data.user.userId);
         localStorage.setItem("token", response.data.access_token);
         localStorage.setItem("isAuthenticated", "true");
+        // Cập nhật Redux state
+        dispatch(setUser(response.data.user));
 
         api.defaults.headers.common[
           "Authorization"

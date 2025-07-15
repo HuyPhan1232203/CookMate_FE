@@ -8,6 +8,7 @@ import { persistor, store } from "@redux/store";
 import { ProfilePage } from "./pages/ProfilePage";
 import ProtectedRoute from "@components/ProtectedRoute";
 import AccessDeniedPage from "@/pages/AccessDeniedPage";
+import HistoryPage from "./pages/HistoryPage";
 
 // Lazy Load
 const HomePage = lazy(() => import("@/pages/HomePage"));
@@ -35,6 +36,14 @@ export default function App() {
                     element={
                       <ProtectedRoute allowedRoles={["user", "admin", "guest"]}>
                         <RecipePage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="history"
+                    element={
+                      <ProtectedRoute allowedRoles={["user", "admin"]}>
+                        <HistoryPage />
                       </ProtectedRoute>
                     }
                   />

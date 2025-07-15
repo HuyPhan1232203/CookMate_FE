@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  favorites: [], // Lưu danh sách id hoặc object recipe yêu thích
+  favorites: {}, // { userId: [recipe, ...] }
 };
 
 const favoriteSlice = createSlice({
@@ -9,22 +9,35 @@ const favoriteSlice = createSlice({
   initialState,
   reducers: {
     addFavorite: (state, action) => {
-      // Tránh thêm trùng
-      if (!state.favorites.find((item) => item.id === action.payload.id)) {
-        state.favorites.push(action.payload);
+      if (Array.isArray(state.favorites)) state.favorites = {};
+      const { userId, recipe } = action.payload;
+      if (!state.favorites[userId]) state.favorites[userId] = [];
+      if (!state.favorites[userId].find((item) => item.id === recipe.id)) {
+        state.favorites[userId].push(recipe);
       }
     },
     removeFavorite: (state, action) => {
-      state.favorites = state.favorites.filter(
-        (item) => item.id !== action.payload
-      );
+      if (Array.isArray(state.favorites)) state.favorites = {};
+      const { userId, recipeId } = action.payload;
+      if (state.favorites[userId]) {
+        state.favorites[userId] = state.favorites[userId].filter(
+          (item) => item.id !== recipeId
+        );
+      }
     },
-    clearFavorites: (state) => {
-      state.favorites = [];
+    setFavorites: (state, action) => {
+      if (Array.isArray(state.favorites)) state.favorites = {};
+      const { userId, favorites } = action.payload;
+      state.favorites[userId] = Array.isArray(favorites) ? favorites : [];
+    },
+    clearFavorites: (state, action) => {
+      if (Array.isArray(state.favorites)) state.favorites = {};
+      const { userId } = action.payload;
+      state.favorites[userId] = [];
     },
   },
 });
 
-export const { addFavorite, removeFavorite, clearFavorites } =
+export const { addFavorite, removeFavorite, setFavorites, clearFavorites } =
   favoriteSlice.actions;
 export default favoriteSlice.reducer;

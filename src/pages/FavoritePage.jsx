@@ -14,7 +14,18 @@ function removeVietnameseTones(str) {
 }
 
 const FavoritePage = () => {
-  const favorites = useSelector((state) => state.favorite.favorites);
+  // Lấy userId từ localStorage
+  let userId = null;
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    userId = user?.id || user?.userId;
+  } catch {
+    /* ignore */
+  }
+  // Lấy favorites đúng theo userId
+  const favorites = useSelector((state) =>
+    userId ? state.favorite.favorites[userId] || [] : []
+  );
   const cardsPerRow = 4;
   const rowRefs = useRef([]);
   const [searchValue, setSearchValue] = useState("");

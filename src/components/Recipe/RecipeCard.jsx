@@ -9,21 +9,25 @@ import { addFavorite, removeFavorite } from "@redux/feature/favoriteSlice";
 const RecipeCard = ({ recipe }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const favorites = useSelector((state) => state.favorite.favorites);
-  const isFavorite = favorites.some((item) => item.id === recipe.id);
-
-  // Lấy role từ localStorage
+  // Lấy userId từ localStorage (ưu tiên user.id, nếu không có thì user.userId)
+  let userId = null;
   let role = "guest";
   try {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.role) role = user.role;
+    userId = user?.userId;
   } catch {
     /* ignore */
   }
+  // Lấy favorite của user hiện tại
+  const favorites = useSelector((state) =>
+    userId ? state.favorite.favorites[userId] || [] : []
+  );
+  const isFavorite = favorites.some((item) => item.id === recipe.id);
 
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
-    if (role === "guest") {
+    if (role === "guest" || !userId) {
       Modal.info({
         title: "Notice",
         content: "You need to log in to use this feature!",
@@ -33,9 +37,9 @@ const RecipeCard = ({ recipe }) => {
       return;
     }
     if (isFavorite) {
-      dispatch(removeFavorite(recipe.id));
+      dispatch(removeFavorite({ userId, recipeId: recipe.id }));
     } else {
-      dispatch(addFavorite(recipe));
+      dispatch(addFavorite({ userId, recipe }));
     }
   };
 

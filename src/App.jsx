@@ -9,6 +9,7 @@ import { ProfilePage } from "./pages/ProfilePage";
 import ProtectedRoute from "@components/ProtectedRoute";
 import AccessDeniedPage from "@/pages/AccessDeniedPage";
 import HistoryPage from "./pages/HistoryPage";
+import BlogPage from "./pages/BlogPage";
 
 // Lazy Load
 const HomePage = lazy(() => import("@/pages/HomePage"));
@@ -76,6 +77,14 @@ export default function App() {
                     element={
                       <ProtectedRoute allowedRoles={["admin"]}>
                         <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="blog"
+                    element={
+                      <ProtectedRoute allowedRoles={["user", "admin"]}>
+                        <BlogPage />
                       </ProtectedRoute>
                     }
                   />

@@ -62,7 +62,6 @@ const searchData = Array.from({ length: 29 }, (_, i) => ({
 function Dashboard() {
   return (
     <>
-      <Header />
       <div
         style={{
           padding: "2rem",
@@ -247,7 +246,6 @@ function Dashboard() {
           </ResponsiveContainer>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

@@ -10,6 +10,8 @@ import ProtectedRoute from "@components/ProtectedRoute";
 import AccessDeniedPage from "@/pages/AccessDeniedPage";
 import HistoryPage from "./pages/HistoryPage";
 import BlogPage from "./pages/BlogPage";
+import UserManage from "./pages/Admin/UserManage";
+import Admin from "./pages/Admin/Admin";
 
 // Lazy Load
 const HomePage = lazy(() => import("@/pages/HomePage"));
@@ -20,7 +22,7 @@ const RegisterPage = lazy(() => import("@/auth/RegisterPage"));
 const ForgotPasswordPage = lazy(() => import("@/auth/ForgotPasswordPage"));
 const NotFoundPage = lazy(() => import("@pages/NotFoundPage"));
 const FavoritePage = lazy(() => import("@/pages/FavoritePage"));
-const Dashboard = lazy(() => import("@/pages/Dashboard"));
+const Dashboard = lazy(() => import("@/pages/Admin/Dashboard"));
 
 export default function App() {
   return (
@@ -107,10 +109,28 @@ export default function App() {
                   }
                 />
                 <Route
-                  path="dashboard"
+                  path="/admin"
                   element={
                     <ProtectedRoute allowedRoles={["admin"]}>
-                      <Dashboard />
+                      <Admin />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route
+                    path="dashboard"
+                    element={<Dashboard />}
+                  />
+                  <Route
+                    path="user"
+                    element={<UserManage />}
+                  />
+                  {/* Có thể thêm các route con khác ở đây */}
+                </Route>
+                <Route
+                  path="admin"
+                  element={
+                    <ProtectedRoute allowedRoles={["admin"]}>
+                      <Admin />
                     </ProtectedRoute>
                   }
                 />

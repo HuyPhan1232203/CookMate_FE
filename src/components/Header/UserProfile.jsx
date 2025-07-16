@@ -71,29 +71,50 @@ const UserProfile = ({ user }) => {
     }
   };
 
-  const menuItems = [
+  let menuItems = [
+    // Nếu là admin, thêm Dashboard và User Management lên đầu
+    ...(user?.role === "admin"
+      ? [
+          {
+            key: "dashboard",
+            icon: <SettingOutlined />,
+            label: "Dashboard",
+            onClick: () => navigate("/admin/dashboard"),
+          },
+          {
+            key: "user-management",
+            icon: <UserOutlined />,
+            label: "User Management",
+            onClick: () => navigate("/admin/user"),
+          },
+        ]
+      : []),
     {
       key: "profile",
       icon: <UserOutlined />,
       label: "Profile",
       onClick: () => navigate(`/users/${userId}`),
     },
-    {
-      key: "my-recipes",
-      icon: <BookOutlined />,
-      label: "My Recipes",
-      onClick: () => navigate("/recipes"),
-    },
-    {
-      key: "favorites",
-      icon: <HeartOutlined />,
-      label: "Favorites",
-      onClick: () => navigate("/favorites"),
-    },
+    // Ẩn My Recipes và Favorites nếu là admin
+    ...(user?.role !== "admin"
+      ? [
+          {
+            key: "my-recipes",
+            icon: <BookOutlined />,
+            label: "My Recipes",
+            onClick: () => navigate("/recipes"),
+          },
+          {
+            key: "favorites",
+            icon: <HeartOutlined />,
+            label: "Favorites",
+            onClick: () => navigate("/favorites"),
+          },
+        ]
+      : []),
     {
       type: "divider",
     },
-
     {
       key: "logout",
       icon: <LogoutOutlined />,

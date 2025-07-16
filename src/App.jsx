@@ -78,9 +78,9 @@ export default function App() {
                   <Route
                     path="blog"
                     element={
-                      <ProtectedRoute allowedRoles={["user", "admin"]}>
+                      
                         <BlogPage />
-                      </ProtectedRoute>
+                      
                     }
                   />
                 </Route>

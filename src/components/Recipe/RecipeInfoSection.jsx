@@ -88,7 +88,7 @@ const RecipeInfoSection = ({ recipe }) => {
           padding="8px 16px"
           style={{ fontWeight: 500, fontSize: 16 }}
         >
-          ← Quay lại danh sách
+          ← Back to list
         </AppButton>
       </div>
     </div>

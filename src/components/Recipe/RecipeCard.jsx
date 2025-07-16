@@ -199,7 +199,7 @@ const RecipeCard = ({ recipe, hideFavorite = false }) => {
           }}
           onClick={() => navigate(`/recipes/${recipe.id}`)}
         >
-          Xem chi tiết
+          View detail
         </AppButton>
       </div>
     </Card>

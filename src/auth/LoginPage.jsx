@@ -46,7 +46,7 @@ const LoginPage = () => {
 
         messageApi.success(`Welcome ${response.data.user.fullName || "user"}!`);
         if (response.data.user.role === "admin") {
-          navigate("/dashboard");
+          navigate("/");
         } else {
           navigate("/");
         }

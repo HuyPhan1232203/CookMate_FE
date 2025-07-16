@@ -208,6 +208,40 @@ const Header = () => {
                 />
               )}
             </Link>
+            {/* Blog menu item */} 
+            <Link
+              to="/blog"
+              style={{
+                ...menuItemBase,
+                ...(isActive("/blog") && menuItemActive),
+              }}
+            >
+              <BookOutlined
+                style={{
+                  marginRight: 6,
+                  transition: "color 0.25s cubic-bezier(.4,2,.6,1)",
+                }}
+              />
+              Blog
+              {isActive("/blog") && (
+                <span
+                  style={{
+                    position: "absolute",
+                    left: 12,
+                    right: 12,
+                    bottom: 6,
+                    height: 3,
+                    borderRadius: 2,
+                    background:
+                      "linear-gradient(90deg,#ff9a44 0%,#ff6b35 100%)",
+                    boxShadow: "0 2px 8px #ff6b3533",
+                    transition: "all 0.35s cubic-bezier(.4,2,.6,1)",
+                    transformOrigin: "center",
+                    animation: "underlineMove 0.5s cubic-bezier(.4,2,.6,1)",
+                  }}
+                />
+              )}
+            </Link>
           </div>
         </div>
         <div

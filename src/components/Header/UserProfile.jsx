@@ -81,8 +81,8 @@ const UserProfile = ({ user }) => {
     {
       key: "my-recipes",
       icon: <BookOutlined />,
-      label: "Công thức của tôi",
-      onClick: () => navigate("/my-recipes"),
+      label: "Công thức món ăn",
+      onClick: () => navigate("/recipes"),
     },
     {
       key: "favorites",
@@ -93,12 +93,7 @@ const UserProfile = ({ user }) => {
     {
       type: "divider",
     },
-    {
-      key: "settings",
-      icon: <SettingOutlined />,
-      label: "Cài đặt",
-      onClick: () => navigate("/settings"),
-    },
+
     {
       key: "logout",
       icon: <LogoutOutlined />,

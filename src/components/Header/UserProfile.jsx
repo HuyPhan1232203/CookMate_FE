@@ -26,7 +26,7 @@ const UserProfile = ({ user }) => {
     localStorage.removeItem("isAuthenticated");
     // Cập nhật Redux state
     dispatch(clearUser());
-    message.success("Đăng xuất thành công!");
+    message.success("Logged out successfully!");
     navigate("/");
 
     // Force a slight delay to ensure localStorage is cleared before reload
@@ -75,19 +75,19 @@ const UserProfile = ({ user }) => {
     {
       key: "profile",
       icon: <UserOutlined />,
-      label: "Thông tin cá nhân",
+      label: "Profile",
       onClick: () => navigate(`/users/${userId}`),
     },
     {
       key: "my-recipes",
       icon: <BookOutlined />,
-      label: "Công thức món ăn",
+      label: "My Recipes",
       onClick: () => navigate("/recipes"),
     },
     {
       key: "favorites",
       icon: <HeartOutlined />,
-      label: "Yêu thích",
+      label: "Favorites",
       onClick: () => navigate("/favorites"),
     },
     {
@@ -97,7 +97,7 @@ const UserProfile = ({ user }) => {
     {
       key: "logout",
       icon: <LogoutOutlined />,
-      label: "Đăng xuất",
+      label: "Logout",
       onClick: handleLogout,
       danger: true,
     },

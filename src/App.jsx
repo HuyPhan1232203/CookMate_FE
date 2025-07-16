@@ -72,14 +72,7 @@ export default function App() {
                       </ProtectedRoute>
                     }
                   />
-                  <Route
-                    path="dashboard"
-                    element={
-                      <ProtectedRoute allowedRoles={["admin"]}>
-                        <Dashboard />
-                      </ProtectedRoute>
-                    }
-                  />
+
                   <Route
                     path="blog"
                     element={
@@ -110,6 +103,14 @@ export default function App() {
                   element={
                     <ProtectedRoute allowedRoles={["guest"]}>
                       <ForgotPasswordPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="dashboard"
+                  element={
+                    <ProtectedRoute allowedRoles={["admin"]}>
+                      <Dashboard />
                     </ProtectedRoute>
                   }
                 />

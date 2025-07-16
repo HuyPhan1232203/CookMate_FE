@@ -67,7 +67,7 @@ const RecipeListHeader = ({ title, onBack, searchValue, onSearch }) => {
         </span>
         <input
           type="text"
-          placeholder="Tìm món ăn..."
+          placeholder="Search for recipes..."
           value={searchValue}
           onChange={(e) => onSearch && onSearch(e.target.value)}
           style={{

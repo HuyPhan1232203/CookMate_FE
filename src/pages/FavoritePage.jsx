@@ -111,7 +111,7 @@ const FavoritePage = () => {
         }}
       >
         <RecipeListHeader
-          title="Công thức yêu thích"
+          title="Favorite Recipes"
           searchValue={searchValue}
           onSearch={setSearchValue}
           onBack={() => navigate("/recipes")}
@@ -125,7 +125,7 @@ const FavoritePage = () => {
               marginTop: 60,
             }}
           >
-            Không tìm thấy công thức nào phù hợp.
+            No recipes found that match your search.
           </div>
         ) : (
           rows.map((row, rowIdx) => (

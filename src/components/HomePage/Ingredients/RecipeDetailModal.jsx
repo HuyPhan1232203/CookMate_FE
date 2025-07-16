@@ -29,11 +29,11 @@ const RecipeDetailModal = ({
   // Get appropriate color for difficulty level
   const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
-      case "Dễ":
+      case "Easy":
         return "#52c41a";
-      case "Trung bình":
+      case "Medium":
         return "#faad14";
-      case "Khó":
+      case "Hard":
         return "#ff4d4f";
       default:
         return "#d9d9d9";
@@ -94,7 +94,7 @@ const RecipeDetailModal = ({
                   </Space>
                   <Space>
                     <UserOutlined />
-                    <span>{selectedRecipe.servings || "2-3"} phần</span>
+                    <span>{selectedRecipe.servings || "2-3"} servings</span>
                   </Space>
                 </Space>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -127,7 +127,7 @@ const RecipeDetailModal = ({
             {selectedRecipe.description && (
               <div style={{ marginBottom: 24 }}>
                 <Title level={5} style={{ marginBottom: 8 }}>
-                  📝 Mô tả món ăn
+                  📝 Description of the dish
                 </Title>
                 <Paragraph style={{ fontSize: "14px", color: "#666" }}>
                   {selectedRecipe.description}
@@ -140,7 +140,7 @@ const RecipeDetailModal = ({
               selectedRecipe.fullIngredients.length > 0 && (
                 <div style={{ marginBottom: 24 }}>
                   <Title level={5} style={{ marginBottom: 12 }}>
-                    🛒 Nguyên liệu cần thiết
+                    🛒 Required Ingredients
                   </Title>
                   <div
                     style={{
@@ -173,14 +173,14 @@ const RecipeDetailModal = ({
             {/* Cooking Steps */}
             <div>
               <Title level={5} style={{ marginBottom: 16 }}>
-                👨‍🍳 Hướng dẫn nấu ăn
+                👨‍🍳 Cooking Instructions
               </Title>
 
               {stepsLoading ? (
                 <div style={{ textAlign: "center", padding: "40px 0" }}>
                   <Spin size="large" />
                   <Text style={{ display: "block", marginTop: 16 }}>
-                    Đang tải hướng dẫn nấu ăn...
+                    Loading cooking instructions...
                   </Text>
                 </div>
               ) : cookingSteps.length > 0 ? (
@@ -188,8 +188,8 @@ const RecipeDetailModal = ({
                   direction="vertical"
                   size="small"
                   current={cookingSteps.length}
-                  items={cookingSteps.map((step, index) => ({
-                    title: `Bước ${step.step}`,
+                  items={cookingSteps.map((step) => ({
+                    title: `Step ${step.step}`,
                     description: (
                       <div style={{ paddingBottom: 16 }}>
                         <Text style={{ fontSize: "14px", lineHeight: "1.6" }}>
@@ -203,7 +203,7 @@ const RecipeDetailModal = ({
               ) : (
                 <Empty
                   image={Empty.PRESENTED_IMAGE_SIMPLE}
-                  description="Không có hướng dẫn nấu ăn"
+                  description="No cooking instructions"
                   style={{ padding: "40px 0" }}
                 />
               )}
@@ -215,4 +215,4 @@ const RecipeDetailModal = ({
   );
 };
 
-export default RecipeDetailModal; 
+export default RecipeDetailModal;

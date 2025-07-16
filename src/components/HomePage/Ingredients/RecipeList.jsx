@@ -10,27 +10,19 @@ import {
   Tag,
   Typography,
 } from "antd";
-import {
-  ClockCircleOutlined,
-  FireOutlined,
-} from "@ant-design/icons";
+import { ClockCircleOutlined, FireOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
 
-const RecipeList = ({
-  loading,
-  suggestions,
-  onRecipeClick,
-  INGREDIENTS,
-}) => {
+const RecipeList = ({ loading, suggestions, onRecipeClick, INGREDIENTS }) => {
   // Get appropriate color for difficulty level
   const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
-      case "Dễ":
+      case "Easy":
         return "#52c41a";
-      case "Trung bình":
+      case "Medium":
         return "#faad14";
-      case "Khó":
+      case "Hard":
         return "#ff4d4f";
       default:
         return "#d9d9d9";
@@ -170,4 +162,4 @@ const RecipeList = ({
   );
 };
 
-export default RecipeList; 
+export default RecipeList;

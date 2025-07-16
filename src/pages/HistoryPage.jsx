@@ -96,7 +96,7 @@ const HistoryPage = () => {
         }}
       >
         <RecipeListHeader
-          title="Lịch sử xem công thức"
+          title="Recipe View History"
           searchValue={searchValue}
           onSearch={setSearchValue}
           onBack={() => navigate("/recipes")}
@@ -110,7 +110,7 @@ const HistoryPage = () => {
               marginTop: 60,
             }}
           >
-            Không tìm thấy công thức nào phù hợp.
+            No recipes found that match your search.
           </div>
         ) : (
           <div

@@ -41,8 +41,8 @@ export const ProfilePage = () => {
         const res = await api.get(endpoints.users.detail(id));
         setUser(res.data);
       } catch {
-        setError("Không thể tải thông tin người dùng!");
-        message.error("Không thể tải thông tin người dùng!");
+        setError("Unable to load user information!");
+        message.error("Unable to load user information!");
       } finally {
         setLoading(false);
       }
@@ -194,10 +194,10 @@ export const ProfilePage = () => {
                 >
                   <IdcardOutlined style={{ marginRight: 6 }} />
                   {user.role === "admin"
-                    ? "Quản trị viên"
+                    ? "Admin"
                     : user.role === "chef"
-                    ? "Đầu bếp"
-                    : "Người dùng"}
+                    ? "Chef"
+                    : "User"}
                 </Tag>
                 {user.isDeleted && (
                   <Tag color="red" style={{ marginTop: 10, borderRadius: 10 }}>

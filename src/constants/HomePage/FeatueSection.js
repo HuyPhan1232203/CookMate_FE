@@ -1,42 +1,42 @@
 export const FEATURES = {
-  TITLE: "✨ Tính năng nổi bật",
+  TITLE: "✨ Featured Features",
   SUBTITLE:
-    "CookMate mang đến cho bạn trải nghiệm nấu ăn hoàn toàn mới với công nghệ AI tiên tiến",
+    "CookMate brings you a completely new cooking experience with advanced AI technology",
   ITEMS: [
     {
-      title: "AI Thông Minh",
+      title: "Smart AI",
       description:
-        "Hệ thống AI tiên tiến phân tích nguyên liệu và gợi ý công thức phù hợp nhất với sở thích của bạn.",
+        "Advanced AI system analyzes ingredients and suggests the most suitable recipe based on your preferences.",
     },
     {
-      title: "Cộng đồng yêu thích",
+      title: "Community of food lovers",
       description:
-        "Kết nối với hàng ngàn người yêu thích nấu ăn, chia sẻ công thức và học hỏi kinh nghiệm.",
+        "Connect with thousands of food lovers, share recipes, and learn from each other's experiences.",
     },
     {
-      title: "Tiết kiệm thời gian",
+      title: "Time-saving",
       description:
-        "Nhanh chóng tìm ra món ăn phù hợp chỉ trong vài giây với thuật toán tìm kiếm thông minh.",
+        "Quickly find a suitable meal in just a few seconds with smart search algorithms.",
     },
     {
-      title: "An toàn thực phẩm",
+      title: "Food safety",
       description:
-        "Thông tin chi tiết về allergies, thành phần dinh dưỡng và hướng dẫn bảo quản thực phẩm.",
+        "Detailed information about allergies, nutritional content, and food preservation instructions.",
     },
     {
-      title: "Đa dạng món ăn",
+      title: "Diverse cuisine",
       description:
-        "Từ món Việt truyền thống đến ẩm thực quốc tế, thỏa mãn mọi khẩu vị và sở thích.",
+        "From traditional Vietnamese dishes to international cuisine, satisfying all tastes and preferences.",
     },
     {
-      title: "Nhanh chóng",
+      title: "Quick",
       description:
-        "Giao diện thân thiện, dễ sử dụng với tốc độ tải nhanh và hiệu suất cao.",
+        "User-friendly interface, easy to use with fast loading speed and high performance.",
     },
   ],
   CTA: {
-    TITLE: "🚀 Sẵn sàng trải nghiệm?",
-    SUBTITLE: "Tham gia cùng hàng ngàn người dùng đã tin tưởng CookMate",
-    BUTTON: "Bắt đầu ngay hôm nay",
+    TITLE: "🚀 Ready to experience?",
+    SUBTITLE: "Join thousands of users who have trusted CookMate",
+    BUTTON: "Start today",
   },
 };

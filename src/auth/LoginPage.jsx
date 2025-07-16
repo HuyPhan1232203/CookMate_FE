@@ -44,19 +44,21 @@ const LoginPage = () => {
           "Authorization"
         ] = `Bearer ${response.data.access_token}`;
 
-        messageApi.success(
-          `Chào mừng ${response.data.user.fullName || "bạn"}!`
-        );
-        navigate("/");
+        messageApi.success(`Welcome ${response.data.user.fullName || "user"}!`);
+        if (response.data.user.role === "admin") {
+          navigate("/dashboard");
+        } else {
+          navigate("/");
+        }
       } else {
-        messageApi.error("Đăng nhập không thành công. Vui lòng thử lại.");
+        messageApi.error("Login failed. Please try again.");
       }
     } catch (error) {
       // Handle error response
       const errorMessage =
         error.response?.data?.message ||
         error.message ||
-        "Đã xảy ra lỗi khi đăng nhập. Vui lòng thử lại.";
+        "An error occurred during login. Please try again.";
 
       messageApi.error(errorMessage);
       console.error("Login error:", error);
@@ -78,8 +80,8 @@ const LoginPage = () => {
         }}
       >
         <LoginHeader
-          title="Chào mừng trở lại!"
-          subtitle={`Đăng nhập để tiếp tục hành trình nấu ăn với ${APP_CONTENT.APP_NAME}`}
+          title="Welcome back!"
+          subtitle={`Log in to continue your cooking journey with ${APP_CONTENT.APP_NAME}`}
         />
         <LoginForm handleLogin={handleLogin} loading={loading} />
       </div>

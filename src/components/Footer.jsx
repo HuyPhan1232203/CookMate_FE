@@ -53,43 +53,43 @@ const Footer = () => {
               </Title>
             </div>
             <Text style={{ color: "#8c8c8c" }}>
-              Hệ thống gợi ý công thức nấu ăn thông minh, giúp bạn tạo ra những
-              món ăn ngon từ nguyên liệu có sẵn.
+              Smart recipe suggestion system, helping you create delicious
+              dishes from available ingredients.
             </Text>
           </Col>
 
           {/* Quick Links */}
           <Col xs={24} sm={12} md={6}>
             <Title level={5} style={{ color: "white", marginBottom: 16 }}>
-              Liên kết nhanh
+              Quick Links
             </Title>
             <Space direction="vertical" size="small">
-              <Link style={{ color: "#8c8c8c" }}>Trang chủ</Link>
-              <Link style={{ color: "#8c8c8c" }}>Công thức</Link>
-              <Link style={{ color: "#8c8c8c" }}>Yêu thích</Link>
-              <Link style={{ color: "#8c8c8c" }}>Tìm kiếm</Link>
-              <Link style={{ color: "#8c8c8c" }}>Về chúng tôi</Link>
+              <Link style={{ color: "#8c8c8c" }}>Home</Link>
+              <Link style={{ color: "#8c8c8c" }}>Recipes</Link>
+              <Link style={{ color: "#8c8c8c" }}>Favorites</Link>
+              <Link style={{ color: "#8c8c8c" }}>Search</Link>
+              <Link style={{ color: "#8c8c8c" }}>About Us</Link>
             </Space>
           </Col>
 
           {/* Support */}
           <Col xs={24} sm={12} md={6}>
             <Title level={5} style={{ color: "white", marginBottom: 16 }}>
-              Hỗ trợ
+              Support
             </Title>
             <Space direction="vertical" size="small">
-              <Link style={{ color: "#8c8c8c" }}>Trung tâm trợ giúp</Link>
-              <Link style={{ color: "#8c8c8c" }}>Điều khoản sử dụng</Link>
-              <Link style={{ color: "#8c8c8c" }}>Chính sách bảo mật</Link>
+              <Link style={{ color: "#8c8c8c" }}>Help Center</Link>
+              <Link style={{ color: "#8c8c8c" }}>Terms of Service</Link>
+              <Link style={{ color: "#8c8c8c" }}>Privacy Policy</Link>
               <Link style={{ color: "#8c8c8c" }}>FAQ</Link>
-              <Link style={{ color: "#8c8c8c" }}>Liên hệ</Link>
+              <Link style={{ color: "#8c8c8c" }}>Contact</Link>
             </Space>
           </Col>
 
           {/* Contact Info */}
           <Col xs={24} sm={12} md={6}>
             <Title level={5} style={{ color: "white", marginBottom: 16 }}>
-              Liên hệ
+              Contact
             </Title>
             <Space direction="vertical" size="small">
               <div style={{ display: "flex", alignItems: "center" }}>
@@ -104,14 +104,16 @@ const Footer = () => {
                 <EnvironmentOutlined
                   style={{ marginRight: 8, color: "#ff6b35" }}
                 />
-                <Text style={{ color: "#8c8c8c" }}>Hà Nội, Việt Nam</Text>
+                <Text style={{ color: "#8c8c8c" }}>
+                  Ho Chi Minh City, Vietnam
+                </Text>
               </div>
             </Space>
 
             {/* Social Media */}
             <div style={{ marginTop: 20 }}>
               <Title level={5} style={{ color: "white", marginBottom: 12 }}>
-                Theo dõi chúng tôi
+                Follow us
               </Title>
               <Space size="middle">
                 <FacebookOutlined
@@ -143,7 +145,7 @@ const Footer = () => {
 
         <div style={{ textAlign: "center" }}>
           <Text style={{ color: "#8c8c8c" }}>
-            © 2024 CookMate. Tất cả quyền được bảo lưu.
+            © 2024 CookMate. All rights reserved.
           </Text>
         </div>
       </div>

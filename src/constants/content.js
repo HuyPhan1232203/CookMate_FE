@@ -6,13 +6,13 @@ export const APP_CONTENT = {
   // Header
   HEADER: {
     MENU_ITEMS: {
-      RECIPES: "Công thức",
-      FAVORITES: "Yêu thích",
-      SEARCH: "Tìm kiếm",
+      RECIPES: "Recipes",
+      FAVORITES: "Favorites",
+      SEARCH: "Search",
     },
     BUTTONS: {
-      LOGIN: "Đăng nhập",
-      REGISTER: "Đăng ký",
+      LOGIN: "Login",
+      REGISTER: "Register",
     },
   },
 
@@ -207,22 +207,22 @@ export const APP_CONTENT = {
 
   // Footer
   FOOTER: {
-    TAGLINE: "Nấu ăn thông minh cùng AI",
+    TAGLINE: "Smart cooking with AI",
     DESCRIPTION:
-      "CookMate - Ứng dụng nấu ăn thông minh với AI, giúp bạn tìm kiếm công thức phù hợp từ nguyên liệu có sẵn.",
+      "CookMate - Smart cooking app with AI, helping you find suitable recipes from available ingredients.",
     LINKS: {
-      ABOUT: "Về chúng tôi",
-      FEATURES: "Tính năng",
-      RECIPES: "Công thức",
+      ABOUT: "About us",
+      FEATURES: "Features",
+      RECIPES: "Recipes",
       BLOG: "Blog",
-      CONTACT: "Liên hệ",
-      PRIVACY: "Chính sách bảo mật",
-      TERMS: "Điều khoản",
+      CONTACT: "Contact",
+      PRIVACY: "Privacy Policy",
+      TERMS: "Terms of Service",
     },
     CONTACT: {
       EMAIL: "contact@cookmate.com",
       PHONE: "+84 123 456 789",
-      ADDRESS: "123 Đường ABC, Quận 1, TP.HCM",
+      ADDRESS: "123 ABC Street, District 1, Ho Chi Minh City",
     },
     SOCIAL: {
       FACEBOOK: "Facebook",
@@ -230,22 +230,22 @@ export const APP_CONTENT = {
       YOUTUBE: "YouTube",
       TWITTER: "Twitter",
     },
-    COPYRIGHT: "© 2024 CookMate. Tất cả quyền được bảo lưu.",
+    COPYRIGHT: "© 2024 CookMate. All rights reserved.",
   },
 
   // Common
   COMMON: {
     BUTTONS: {
-      LEARN_MORE: "Tìm hiểu thêm",
-      GET_STARTED: "Bắt đầu",
-      VIEW_ALL: "Xem tất cả",
-      BACK: "Quay lại",
-      NEXT: "Tiếp theo",
-      SUBMIT: "Gửi",
-      CANCEL: "Hủy",
-      SAVE: "Lưu",
-      EDIT: "Chỉnh sửa",
-      DELETE: "Xóa",
+      LEARN_MORE: "Learn more",
+      GET_STARTED: "Get started",
+      VIEW_ALL: "View all",
+      BACK: "Back",
+      NEXT: "Next",
+      SUBMIT: "Submit",
+      CANCEL: "Cancel",
+      SAVE: "Save",
+      EDIT: "Edit",
+      DELETE: "Delete",
     },
     MESSAGES: {
       LOADING: "Đang tải...",

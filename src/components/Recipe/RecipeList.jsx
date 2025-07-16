@@ -51,8 +51,8 @@ const RecipeList = () => {
           setMeta(res.data.meta);
         }
       } catch (err) {
-        setError("Không thể tải danh sách công thức!");
-        message.error("Không thể tải danh sách công thức!");
+        setError("Unable to load recipe list!");
+        message.error("Unable to load recipe list!");
       } finally {
         if (isMounted) setLoading(false);
       }
@@ -70,13 +70,20 @@ const RecipeList = () => {
     )
   );
 
-  // Giới hạn cho guest
-  const limitedRecipes = isGuest
-    ? filteredRecipes.slice(0, 8)
-    : filteredRecipes;
+  // Giới hạn cho guest: chỉ xem tối đa 10 recipe đầu tiên, không phân trang
+  let displayRecipes = filteredRecipes;
+  let showLoginToSeeMore = false;
+  if (isGuest) {
+    if (filteredRecipes.length > 10) {
+      displayRecipes = filteredRecipes.slice(0, 10);
+      showLoginToSeeMore = true;
+    } else {
+      displayRecipes = filteredRecipes;
+    }
+  }
   const rows = [];
-  for (let i = 0; i < limitedRecipes.length; i += cardsPerRow) {
-    rows.push(limitedRecipes.slice(i, i + cardsPerRow));
+  for (let i = 0; i < displayRecipes.length; i += cardsPerRow) {
+    rows.push(displayRecipes.slice(i, i + cardsPerRow));
   }
 
   useEffect(() => {
@@ -125,7 +132,7 @@ const RecipeList = () => {
       {/* Emoji động trang trí nền */}
       <FloatingEmojis />
       <RecipeListHeader
-        title="Công Thức Nấu Ăn"
+        title="Recipes"
         onBack={() => window.history.back()}
         searchValue={searchValue}
         onSearch={setSearchValue}
@@ -192,7 +199,7 @@ const RecipeList = () => {
               />
             ))}
             {/* Nếu là guest và có nhiều hơn 10 món thì hiện nút đăng nhập */}
-            {isGuest && filteredRecipes.length > 10 && (
+            {isGuest && showLoginToSeeMore && (
               <div style={{ textAlign: "center", margin: 32 }}>
                 <button
                   style={{
@@ -206,10 +213,11 @@ const RecipeList = () => {
                   }}
                   onClick={() => navigate("/login")}
                 >
-                  Login to see more recipes
+                  Log in to see more and enable pagination
                 </button>
               </div>
             )}
+            {/* Guest cũng được phân trang, không cần hiện nút đăng nhập khi có nhiều món */}
           </>
         )}
       </div>
@@ -247,35 +255,41 @@ const RecipeList = () => {
           marginTop: 32,
         }}
       >
-        <AppButton
-          onClick={() =>
-            meta.currentPage > 1 &&
-            setMeta((m) => ({ ...m, currentPage: m.currentPage - 1 }))
-          }
-          bg="#ff6b35"
-          color="#fff"
-          size="16px"
-          radius="12px"
-          disabled={meta.currentPage === 1}
-        >
-          Prev
-        </AppButton>
-        <span style={{ alignSelf: "center", fontWeight: 600, fontSize: 16 }}>
-          Trang {meta.currentPage} / {meta.totalPages}
-        </span>
-        <AppButton
-          onClick={() =>
-            meta.currentPage < meta.totalPages &&
-            setMeta((m) => ({ ...m, currentPage: m.currentPage + 1 }))
-          }
-          bg="#ff6b35"
-          color="#fff"
-          size="16px"
-          radius="12px"
-          disabled={meta.currentPage === meta.totalPages}
-        >
-          Next
-        </AppButton>
+        {!isGuest && (
+          <>
+            <AppButton
+              onClick={() =>
+                meta.currentPage > 1 &&
+                setMeta((m) => ({ ...m, currentPage: m.currentPage - 1 }))
+              }
+              bg="#ff6b35"
+              color="#fff"
+              size="16px"
+              radius="12px"
+              disabled={meta.currentPage === 1}
+            >
+              Prev
+            </AppButton>
+            <span
+              style={{ alignSelf: "center", fontWeight: 600, fontSize: 16 }}
+            >
+              Page {meta.currentPage} / {meta.totalPages}
+            </span>
+            <AppButton
+              onClick={() =>
+                meta.currentPage < meta.totalPages &&
+                setMeta((m) => ({ ...m, currentPage: m.currentPage + 1 }))
+              }
+              bg="#ff6b35"
+              color="#fff"
+              size="16px"
+              radius="12px"
+              disabled={meta.currentPage === meta.totalPages}
+            >
+              Next
+            </AppButton>
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,24 +1,24 @@
 export const HERO = {
-  TITLE: "Nấu ăn thông minh với",
+  TITLE: "Cook with",
   TITLE_HIGHLIGHT: "CookMate AI",
   SUBTITLE:
-    "Khám phá hàng ngàn công thức nấu ăn phù hợp với nguyên liệu bạn có. Hệ thống AI thông minh sẽ gợi ý những món ăn ngon nhất cho bạn!",
+    "Discover thousands of cooking recipes suitable for your ingredients. The intelligent AI system will suggest the best dishes for you!",
   BUTTONS: {
-    PRIMARY: "Tìm công thức ngay",
-    SECONDARY: "Xem thư viện công thức",
+    PRIMARY: "Find a recipe now",
+    SECONDARY: "View recipe library",
   },
   STATS: {
     RECIPES: {
       NUMBER: "1000+",
-      LABEL: "Công thức",
+      LABEL: "Recipes",
     },
     USERS: {
       NUMBER: "50K+",
-      LABEL: "Người dùng",
+      LABEL: "Users",
     },
     RATING: {
       NUMBER: "4.8★",
-      LABEL: "Đánh giá",
+      LABEL: "Rating",
     },
   },
 };

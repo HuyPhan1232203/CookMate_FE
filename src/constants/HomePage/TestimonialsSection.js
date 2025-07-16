@@ -1,37 +1,36 @@
 export const TESTIMONIALS = {
-  TITLE: "💬 Người dùng nói gì về CookMate",
+  TITLE: "💬 What people say about CookMate",
   SUBTITLE:
-    "Hơn 50,000 người dùng đã tin tưởng và sử dụng CookMate trong hành trình nấu ăn của họ",
+    "More than 50,000 users have trusted and used CookMate in their cooking journey",
   STATS: {
     RATING: {
       NUMBER: "4.8/5",
-      LABEL: "Đánh giá trung bình",
+      LABEL: "Average rating",
     },
     USERS: {
       NUMBER: "50K+",
-      LABEL: "Người dùng hài lòng",
+      LABEL: "Satisfied users",
     },
     RECOMMENDATION: {
       NUMBER: "98%",
-      LABEL: "Tỷ lệ giới thiệu",
+      LABEL: "Referral rate",
     },
   },
   CTA: {
-    TITLE: "🎉 Tham gia cộng đồng CookMate ngay hôm nay!",
-    SUBTITLE:
-      "Hàng ngàn người đã tin tưởng chọn CookMate. Bạn sẽ là người tiếp theo?",
+    TITLE: "🎉 Join the CookMate community today!",
+    SUBTITLE: "Thousands of people have trusted CookMate. Will you be next?",
     FEATURES: [
       {
-        TITLE: "📱 Tải app miễn phí",
+        TITLE: "📱 Download free app",
         SUBTITLE: "iOS & Android",
       },
       {
-        TITLE: "🎁 Thử nghiệm 30 ngày",
-        SUBTITLE: "Hoàn toàn miễn phí",
+        TITLE: "🎁 Try for 30 days",
+        SUBTITLE: "Completely free",
       },
       {
-        TITLE: "🔄 Cập nhật thường xuyên",
-        SUBTITLE: "Tính năng mới mỗi tuần",
+        TITLE: "🔄 Regular updates",
+        SUBTITLE: "New features every week",
       },
     ],
   },

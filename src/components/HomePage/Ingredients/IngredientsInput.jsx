@@ -1,16 +1,6 @@
 import React from "react";
-import {
-  Card,
-  Input,
-  Button,
-  Tag,
-  Space,
-  Typography,
-} from "antd";
-import {
-  PlusOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
+import { Card, Input, Button, Tag, Space, Typography } from "antd";
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 
 const { Text } = Typography;
 
@@ -27,21 +17,21 @@ const IngredientsInput = ({
 }) => {
   // Mock data for ingredient suggestions
   const ingredientSuggestions = [
-    "🍖 Thịt heo",
-    "🍗 Thịt gà",
-    "🐟 Cá",
-    "🦐 Tôm",
-    "🥚 Trứng",
-    "🍅 Cà chua",
-    "🧅 Hành tây",
-    "🥕 Cà rốt",
-    "🥬 Rau cải",
-    "🌶️ Ớt",
-    "🧄 Tỏi",
-    "🫚 Gừng",
-    "🌾 Gạo",
-    "🍜 Mì",
-    "🥔 Khoai tây",
+    "🥩 Pork",
+    "🍗 Chicken",
+    "🐟 Fish",
+    "🦐 Shrimp",
+    "🥚 Egg",
+    "🍅 Tomato",
+    "🧅 Onion",
+    "🥕 Carrot",
+    "🥬 Leafy greens",
+    "🌶️ Chili",
+    "🧄 Garlic",
+    "🫚 Ginger",
+    "🌾 Rice",
+    "🍜 Noodles",
+    "🥔 Potato",
   ];
 
   return (
@@ -170,4 +160,4 @@ const IngredientsInput = ({
   );
 };
 
-export default IngredientsInput; 
+export default IngredientsInput;

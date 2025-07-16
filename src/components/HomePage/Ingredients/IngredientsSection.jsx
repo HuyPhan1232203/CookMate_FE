@@ -58,7 +58,7 @@ const IngredientsSection = () => {
         setCookingSteps(sortedSteps);
       } else {
         setCookingSteps([]);
-        messageApi.warning("Không tìm thấy hướng dẫn nấu ăn cho món này.");
+        messageApi.warning("No cooking instructions found for this dish.");
       }
     } catch (error) {
       console.error("Error fetching cooking steps:", error);
@@ -67,7 +67,7 @@ const IngredientsSection = () => {
       const errorMessage =
         error.response?.data?.message ||
         error.message ||
-        "Không thể tải hướng dẫn nấu ăn. Vui lòng thử lại!";
+        "Unable to load cooking instructions. Please try again!";
       messageApi.error(errorMessage);
     } finally {
       setStepsLoading(false);
@@ -96,7 +96,7 @@ const IngredientsSection = () => {
   // Handle search with real API
   const handleSearch = async () => {
     if (ingredients.length === 0) {
-      messageApi.warning("Vui lòng thêm ít nhất một nguyên liệu!");
+      messageApi.warning("Please add at least one ingredient!");
       return;
     }
 
@@ -106,7 +106,7 @@ const IngredientsSection = () => {
       // Check if user is authenticated
       const token = localStorage.getItem("token");
       if (!token) {
-        messageApi.error("Vui lòng đăng nhập để sử dụng tính năng này!");
+        messageApi.error("Please log in to use this feature!");
         return;
       }
 
@@ -125,14 +125,10 @@ const IngredientsSection = () => {
           : [transformRecipe(response.data)];
 
         setSuggestions(transformedRecipes);
-        messageApi.success(
-          `Tìm thấy ${transformedRecipes.length} công thức phù hợp!`
-        );
+        messageApi.success(`Found ${transformedRecipes.length} recipes!`);
       } else {
         setSuggestions([]);
-        messageApi.info(
-          "Không tìm thấy công thức nào phù hợp với nguyên liệu của bạn."
-        );
+        messageApi.info("No recipes found that match your ingredients.");
       }
     } catch (error) {
       console.error("Search error:", error);
@@ -140,20 +136,20 @@ const IngredientsSection = () => {
 
       // Handle different types of errors
       if (error.response?.status === 401) {
-        messageApi.error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!");
+        messageApi.error(
+          "Your login session has expired. Please log in again!"
+        );
         // Clear auth data
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         localStorage.removeItem("isAuthenticated");
       } else if (error.response?.status === 400) {
-        messageApi.error(
-          "Thông tin nguyên liệu không hợp lệ. Vui lòng kiểm tra lại!"
-        );
+        messageApi.error("Invalid ingredient information. Please check again!");
       } else {
         const errorMessage =
           error.response?.data?.message ||
           error.message ||
-          "Không thể tạo công thức. Vui lòng thử lại sau!";
+          "Unable to create recipe. Please try again later!";
         messageApi.error(errorMessage);
       }
     } finally {
@@ -166,13 +162,12 @@ const IngredientsSection = () => {
     return {
       id: apiRecipe.id,
       name: apiRecipe.name,
-      time: apiRecipe.cookingTime || "30 phút",
+      time: apiRecipe.cookingTime || "30 minutes",
       difficulty: mapComplexityToDifficulty(apiRecipe.complexity),
       calories: apiRecipe.totalCalories || 300,
       image: getRecipeEmoji(apiRecipe.name), // Generate emoji based on recipe name
       rating: apiRecipe.rating || 4.0,
-      matchingIngredients:
-        apiRecipe.ingredients?.length || ingredients.length,
+      matchingIngredients: apiRecipe.ingredients?.length || ingredients.length,
       description: apiRecipe.description,
       origin: apiRecipe.origin,
       servings: apiRecipe.servings,
@@ -185,29 +180,29 @@ const IngredientsSection = () => {
     switch (complexity?.toLowerCase()) {
       case "easy":
       case "1":
-        return "Dễ";
+        return "Easy";
       case "medium":
       case "2":
-        return "Trung bình";
+        return "Medium";
       case "hard":
       case "3":
-        return "Khó";
+        return "Hard";
       default:
-        return "Trung bình";
+        return "Medium";
     }
   };
 
   // Generate emoji based on recipe name (simple heuristic)
   const getRecipeEmoji = (recipeName) => {
     const name = recipeName?.toLowerCase() || "";
-    if (name.includes("thịt heo") || name.includes("heo")) return "🍖";
-    if (name.includes("thịt gà") || name.includes("gà")) return "🍗";
-    if (name.includes("cá")) return "🐟";
-    if (name.includes("tôm")) return "🦐";
-    if (name.includes("canh") || name.includes("súp")) return "🍲";
-    if (name.includes("cơm")) return "🍚";
-    if (name.includes("mì") || name.includes("phở")) return "🍜";
-    if (name.includes("xào")) return "🥘";
+    if (name.includes("pork")) return "🥩";
+    if (name.includes("chicken")) return "🍗";
+    if (name.includes("fish")) return "🐟";
+    if (name.includes("shrimp")) return "🦐";
+    if (name.includes("soup")) return "🍲";
+    if (name.includes("rice")) return "🍚";
+    if (name.includes("noodle")) return "🍜";
+    if (name.includes("stir-fry")) return "🥘";
     return "🍽️"; // Default food emoji
   };
 
@@ -267,4 +262,4 @@ const IngredientsSection = () => {
   );
 };
 
-export default IngredientsSection; 
+export default IngredientsSection;

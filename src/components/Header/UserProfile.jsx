@@ -150,17 +150,6 @@ const UserProfile = ({ user }) => {
           }}
         >
           {getRoleText()}
-          {!user?.verified && (
-            <span
-              style={{
-                marginLeft: "4px",
-                color: "#faad14",
-                fontSize: "10px",
-              }}
-            >
-              (Chưa xác thực)
-            </span>
-          )}
         </Text>
       </div>
 

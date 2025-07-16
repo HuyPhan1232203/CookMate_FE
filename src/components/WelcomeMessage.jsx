@@ -42,9 +42,9 @@ const WelcomeMessage = () => {
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return "Chào buổi sáng";
-    if (hour < 18) return "Chào buổi chiều";
-    return "Chào buổi tối";
+    if (hour < 12) return "Good morning";
+    if (hour < 18) return "Good afternoon";
+    return "Good evening";
   };
 
   const getRoleIcon = () => {
@@ -72,11 +72,11 @@ const WelcomeMessage = () => {
   const getRoleText = () => {
     switch (user.role) {
       case "admin":
-        return "Quản trị viên";
+        return "Admin";
       case "chef":
-        return "Bếp trưởng";
+        return "Chef";
       default:
-        return "Người dùng";
+        return "User";
     }
   };
 
@@ -148,19 +148,6 @@ const WelcomeMessage = () => {
               >
                 {getRoleText()}
               </Tag>
-
-              {!user.verified && (
-                <Tag
-                  color="warning"
-                  style={{
-                    borderRadius: "20px",
-                    padding: "4px 12px",
-                    fontSize: "12px",
-                  }}
-                >
-                  Chưa xác thực
-                </Tag>
-              )}
             </Space>
 
             <Text
@@ -172,8 +159,8 @@ const WelcomeMessage = () => {
                 lineHeight: "1.4",
               }}
             >
-              Hôm nay bạn muốn nấu món gì? Hãy khám phá những công thức tuyệt
-              vời từ CookMate! 🍽️
+              What do you want to cook today? Discover amazing recipes from
+              CookMate! 🍽️
             </Text>
           </div>
         </Space>

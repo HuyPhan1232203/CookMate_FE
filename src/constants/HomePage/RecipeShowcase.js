@@ -1,15 +1,14 @@
 export const RECIPES = {
-  TITLE: "🔥 Công thức nổi bật",
-  SUBTITLE:
-    "Khám phá những công thức được yêu thích nhất từ cộng đồng CookMate",
+  TITLE: "🔥 Featured Recipes",
+  SUBTITLE: "Discover the most loved recipes from the CookMate community",
   BUTTONS: {
-    VIEW_RECIPE: "Xem công thức",
-    SHARE: "Chia sẻ",
-    VIEW_MORE: "Xem thêm công thức →",
+    VIEW_RECIPE: "View recipe",
+    SHARE: "Share",
+    VIEW_MORE: "View more recipes →",
   },
   DIFFICULTY: {
-    EASY: "Dễ",
-    MEDIUM: "Trung bình",
-    HARD: "Khó",
+    EASY: "Easy",
+    MEDIUM: "Medium",
+    HARD: "Hard",
   },
 };

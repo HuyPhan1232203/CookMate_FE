@@ -1,7 +1,23 @@
+/* eslint-disable no-unused-vars */
 // BlogPage.jsx - Trang danh sách blog
 // Để sử dụng: import BlogPage vào router hoặc menu
 import React, { useEffect, useState } from "react";
-import { Card, Row, Col, Typography, Avatar, Spin, Alert, Empty, Modal, Form, Input, message, Popconfirm, Button } from "antd";
+import {
+  Card,
+  Row,
+  Col,
+  Typography,
+  Avatar,
+  Spin,
+  Alert,
+  Empty,
+  Modal,
+  Form,
+  Input,
+  message,
+  Popconfirm,
+  Button,
+} from "antd";
 import { UserOutlined, CalendarOutlined } from "@ant-design/icons";
 import api from "@/config/axios";
 import image from "@/assets/images/image_food.jpg";
@@ -28,7 +44,9 @@ const BlogPage = () => {
       const user = JSON.parse(userData);
       if (user && user.role) role = user.role;
     }
-  } catch {}
+  } catch {
+    role = "guest";
+  }
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -60,7 +78,10 @@ const BlogPage = () => {
   const handleCreateOrEdit = async (values) => {
     try {
       if (editBlog) {
-        await api.put(`https://cookmate-api.lighttail.com/blog/${editBlog.id}`, values);
+        await api.put(
+          `https://cookmate-api.lighttail.com/blog/${editBlog.id}`,
+          values
+        );
         message.success("Blog updated!");
       } else {
         await api.post("https://cookmate-api.lighttail.com/blog", values);
@@ -112,17 +133,41 @@ const BlogPage = () => {
             }}
           >
             {/* Trái: BackButton */}
-            <div style={{ minWidth: 60, flex: 1, display: 'flex', justifyContent: 'flex-start' }}>
-              <BackButton onClick={() => window.location.href = "/"} />
+            <div
+              style={{
+                minWidth: 60,
+                flex: 1,
+                display: "flex",
+                justifyContent: "flex-start",
+              }}
+            >
+              <BackButton onClick={() => (window.location.href = "/")} />
             </div>
             {/* Giữa: Tiêu đề */}
-            <div style={{ flex: 2, display: 'flex', justifyContent: 'center' }}>
-              <ShimmerTitle as="h2" style={{ margin: 0, color: "#ff6b35", fontSize: 36, fontWeight: 700, letterSpacing: 1, fontFamily: 'inherit' }}>
+            <div style={{ flex: 2, display: "flex", justifyContent: "center" }}>
+              <ShimmerTitle
+                as="h2"
+                style={{
+                  margin: 0,
+                  color: "#ff6b35",
+                  fontSize: 36,
+                  fontWeight: 700,
+                  letterSpacing: 1,
+                  fontFamily: "inherit",
+                }}
+              >
                 Food Blog
               </ShimmerTitle>
             </div>
             {/* Phải: Nút New Blog */}
-            <div style={{ minWidth: 120, flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+            <div
+              style={{
+                minWidth: 120,
+                flex: 1,
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
               {role === "admin" && (
                 <Button
                   type="primary"
@@ -137,7 +182,11 @@ const BlogPage = () => {
                     minWidth: 120,
                     boxShadow: "0 2px 8px #ffb36633",
                   }}
-                  onClick={() => { setShowModal(true); setEditBlog(null); }}
+                  onClick={() => {
+                    form.resetFields(); // Reset form về rỗng trước khi tạo mới
+                    setShowModal(true);
+                    setEditBlog(null);
+                  }}
                 >
                   + New Blog
                 </Button>
@@ -148,15 +197,38 @@ const BlogPage = () => {
           <Modal
             open={showModal}
             title={editBlog ? "Edit Blog" : "Create New Blog"}
-            onCancel={() => { setShowModal(false); setEditBlog(null); form.resetFields(); }}
+            onCancel={() => {
+              setShowModal(false);
+              setEditBlog(null);
+              form.resetFields();
+            }}
             onOk={() => form.submit()}
             okText={editBlog ? "Save" : "Create"}
             cancelText="Cancel"
           >
-            <Form form={form} layout="vertical" onFinish={handleCreateOrEdit} initialValues={editBlog || {}}>
-              <Form.Item name="title" label="Title" rules={[{ required: true, message: "Please enter title" }]}> <Input /> </Form.Item>
-              <Form.Item name="content" label="Content" rules={[{ required: true, message: "Please enter content" }]}> <Input.TextArea rows={4} /> </Form.Item>
-              <Form.Item name="imageUrl" label="Image URL"> <Input /> </Form.Item>
+            <Form
+              form={form}
+              layout="vertical"
+              onFinish={handleCreateOrEdit}
+              initialValues={editBlog || {}}
+            >
+              <Form.Item
+                name="title"
+                label="Title"
+                rules={[{ required: true, message: "Please enter title" }]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="content"
+                label="Content"
+                rules={[{ required: true, message: "Please enter content" }]}
+              >
+                <Input.TextArea rows={4} />
+              </Form.Item>
+              <Form.Item name="imageUrl" label="Image URL">
+                <Input />
+              </Form.Item>
             </Form>
           </Modal>
           {/* Search input giống Recipes */}
@@ -183,7 +255,13 @@ const BlogPage = () => {
               }}
             >
               <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
-                <circle cx="11" cy="11" r="7" stroke="#ff9a44" strokeWidth="2" />
+                <circle
+                  cx="11"
+                  cy="11"
+                  r="7"
+                  stroke="#ff9a44"
+                  strokeWidth="2"
+                />
                 <path
                   d="M20 20L16.65 16.65"
                   stroke="#ff9a44"
@@ -245,7 +323,10 @@ const BlogPage = () => {
               style={{ marginBottom: 32 }}
             />
           ) : filteredPosts.length === 0 ? (
-            <Empty description="No blog posts yet" style={{ margin: "60px 0" }} />
+            <Empty
+              description="No blog posts yet"
+              style={{ margin: "60px 0" }}
+            />
           ) : (
             <Row gutter={[32, 32]}>
               {filteredPosts.map((post) => (
@@ -269,12 +350,34 @@ const BlogPage = () => {
                       boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
                     }}
                     bodyStyle={{ padding: 20 }}
-                    actions={role === "admin" ? [
-                      <Button key="edit" type="link" onClick={() => { setEditBlog(post); setShowModal(true); form.setFieldsValue(post); }}>Edit</Button>,
-                      <Popconfirm key="delete" title="Delete this blog?" onConfirm={() => handleDelete(post.id)} okText="Yes" cancelText="No">
-                        <Button type="link" danger>Delete</Button>
-                      </Popconfirm>
-                    ] : []}
+                    actions={
+                      role === "admin"
+                        ? [
+                            <Button
+                              key="edit"
+                              type="link"
+                              onClick={() => {
+                                setEditBlog(post);
+                                setShowModal(true);
+                                form.setFieldsValue(post);
+                              }}
+                            >
+                              Edit
+                            </Button>,
+                            <Popconfirm
+                              key="delete"
+                              title="Delete this blog?"
+                              onConfirm={() => handleDelete(post.id)}
+                              okText="Yes"
+                              cancelText="No"
+                            >
+                              <Button type="link" danger>
+                                Delete
+                              </Button>
+                            </Popconfirm>,
+                          ]
+                        : []
+                    }
                   >
                     <Title level={4} style={{ marginBottom: 8 }}>
                       {post.title}
@@ -298,9 +401,15 @@ const BlogPage = () => {
                         icon={<UserOutlined />}
                         style={{ background: "#ff8c42" }}
                       />
-                      <Text style={{ color: "#888", fontWeight: 500 }}>CookMate Blog</Text>
-                      <CalendarOutlined style={{ color: "#bbb", marginLeft: 8, marginRight: 4 }} />
-                      <Text style={{ color: "#bbb" }}>{new Date(post.createdAt).toLocaleDateString()}</Text>
+                      <Text style={{ color: "#888", fontWeight: 500 }}>
+                        CookMate Blog
+                      </Text>
+                      <CalendarOutlined
+                        style={{ color: "#bbb", marginLeft: 8, marginRight: 4 }}
+                      />
+                      <Text style={{ color: "#bbb" }}>
+                        {new Date(post.createdAt).toLocaleDateString()}
+                      </Text>
                     </div>
                   </Card>
                 </Col>

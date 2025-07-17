@@ -1,11 +1,11 @@
 import api from "@/config/axios";
-import { Button, Modal, Table } from "antd";
+import { Button, Modal, Table, Popconfirm, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import BackButton from "@/components/Recipe/BackButton";
-import styled from "styled-components";
+
 import { ShimmerTitle } from "@/styles/RecipeStyle/RecipeList.styled";
 
 function UserManage() {
@@ -20,9 +20,11 @@ function UserManage() {
   };
   const handleDelete = async (id) => {
     try {
-      const res = await api.delete(`users/${id}`);
+      await api.delete(`users/${id}`);
+      message.success("User deleted successfully!");
     } catch (error) {
       console.log(error);
+      message.error("Failed to delete user!");
     } finally {
       fetchUser();
     }
@@ -32,11 +34,11 @@ function UserManage() {
   }, []);
   // Đảm bảo body không có margin/padding
   React.useEffect(() => {
-    document.body.style.margin = '0';
-    document.body.style.padding = '0';
+    document.body.style.margin = "0";
+    document.body.style.padding = "0";
     return () => {
-      document.body.style.margin = '';
-      document.body.style.padding = '';
+      document.body.style.margin = "";
+      document.body.style.padding = "";
     };
   }, []);
   const col = [
@@ -62,9 +64,16 @@ function UserManage() {
       render: (item) => {
         return (
           <div>
-            <Button onClick={() => handleDelete(item)}>
-              <FaTrash />
-            </Button>
+            <Popconfirm
+              title="Bạn có chắc chắn muốn xóa user này?"
+              onConfirm={() => handleDelete(item)}
+              okText="Xóa"
+              cancelText="Hủy"
+            >
+              <Button danger>
+                <FaTrash />
+              </Button>
+            </Popconfirm>
           </div>
         );
       },
@@ -73,7 +82,18 @@ function UserManage() {
 
   return (
     <>
-      <div style={{ width: '100vw', position: 'relative', left: '50%', right: '50%', margin: 0, padding: 0, marginLeft: '-50vw', marginRight: '-50vw' }}>
+      <div
+        style={{
+          width: "100vw",
+          position: "relative",
+          left: "50%",
+          right: "50%",
+          margin: 0,
+          padding: 0,
+          marginLeft: "-50vw",
+          marginRight: "-50vw",
+        }}
+      >
         <Header />
       </div>
       <div
@@ -107,20 +127,49 @@ function UserManage() {
               }}
             >
               <div style={{ minWidth: 60 }}>
-                <BackButton onClick={() => window.location.href = "/"} />
+                <BackButton onClick={() => (window.location.href = "/")} />
               </div>
-              <ShimmerTitle style={{ fontSize: 38, fontWeight: 800, color: "#ff6b35", letterSpacing: 1, fontFamily: 'inherit', margin: 0 }}>
+              <ShimmerTitle
+                style={{
+                  fontSize: 38,
+                  fontWeight: 800,
+                  color: "#ff6b35",
+                  letterSpacing: 1,
+                  fontFamily: "inherit",
+                  margin: 0,
+                }}
+              >
                 User Management
               </ShimmerTitle>
             </div>
             {/* Table wrapper giữ nguyên */}
-            <div style={{ background: '#fff', borderRadius: 24, boxShadow: '0 8px 32px rgba(255,107,53,0.10)', padding: 0, maxWidth: 1100, margin: '0 auto' }}>
+            <div
+              style={{
+                background: "#fff",
+                borderRadius: 24,
+                boxShadow: "0 8px 32px rgba(255,107,53,0.10)",
+                padding: 0,
+                maxWidth: 1100,
+                margin: "0 auto",
+              }}
+            >
               <Table showHeader columns={col} dataSource={data}></Table>
             </div>
           </div>
         </div>
       </div>
-      <div style={{ width: '100vw', position: 'relative', left: '50%', right: '50%', margin: 0, padding: 0, marginLeft: '-50vw', marginRight: '-50vw' }}>
+      <div
+        style={{
+          width: "100vw",
+          position: "relative",
+          left: "50%",
+          right: "50%",
+          margin: 0,
+          padding: 0,
+          marginLeft: "-50vw",
+          marginRight: "-50vw",
+        }}
+      >
         <Footer />
       </div>
     </>
